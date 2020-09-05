@@ -1,0 +1,39 @@
+/*   final category = ParseObject('Categories') //definindo a tabela
+    ..set<String>('Title', 'Meias') //coluna title com valor meia
+    ..set<int>('Position', 3); //coluna position, posicao 3
+
+  final response = await category.save(); //salvando os dados no banco
+  print(response.success); */
+
+  //atualizando um dado da tabela
+  /* final category = ParseObject('Categories')
+    ..objectId = 'ERUSHjYMQq'
+    ..set<int>('Position', 1);
+  final response = await category.save(); //salvando os dados no banco
+  print(response.success); */
+
+  //removendo dados da tabela
+  /* final category = ParseObject('Categories')..objectId = 'ERUSHjYMQq';
+  category.delete(); */
+  //lendo dados da tablea
+  /* final response = await ParseObject("Categories").getObject('AFjLrefr03');
+  if (response.success) {
+    print(response.result);
+  } */
+  /* final response = await ParseObject("Categories").getAll();
+  if (response.success) {
+    //buscando todos os objetos na tabela
+    for (final object in response.result) print(object);
+  } */
+  //pegando um objeto baseado na posicao
+  /* final query = QueryBuilder(ParseObject('Categories'));
+  query.whereEqualTo('Position', 2);
+  //para buscar por string é só user wehreContains('Title", 'blusinhas)
+  final response = await query.query();
+  if (response.success) {
+    print(response.result);
+  } */
+
+  manipulando dados no parse
+
+  o get_it será responsável por passar os dados entre as telas
