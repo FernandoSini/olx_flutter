@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:olx_mobx/screens/Login/LoginScreen.dart';
+import 'package:olx_mobx/stores/page_store.dart';
+import 'package:olx_mobx/stores/user_manager_store.dart';
 
 class CustomDrawerHeader extends StatelessWidget {
+/* buscando a instancia/dados do usuario que foi armazenado no get It */
+  final UserManagerStore userManagerStore = GetIt.I<UserManagerStore>();
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pop();
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (_) => LoginScreen()));
+
+        if (userManagerStore.isLoggedIn) {
+          GetIt.I<PageStore>().setPage(4);
+        } else {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (_) => LoginScreen()));
+        }
       },
       child: Container(
         color: Colors.blueAccent[700],
@@ -24,14 +34,18 @@ class CustomDrawerHeader extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Acesse sua conta.',
+                      userManagerStore.isLoggedIn
+                          ? userManagerStore.user.name
+                          : 'Acesse sua conta.',
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.w500),
                     ),
                     Text(
-                      "Clique Aqui!",
+                      userManagerStore.isLoggedIn
+                          ? userManagerStore.user.email
+                          : "Clique Aqui!",
                       style: TextStyle(
                         fontSize: 14,
                         color: Colors.white,

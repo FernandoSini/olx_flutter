@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:olx_mobx/stores/page_store.dart';
+import 'package:olx_mobx/stores/user_manager_store.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 
 import 'screens/base/BaseScreen.dart';
@@ -25,6 +26,9 @@ Future<void> _inicializarParse() async {
 void setupLocators() {
   /* Só pode ter um get_it no projeto, singleton é um objeto que só pode existir uma vez no projeto */
   GetIt.I.registerSingleton(PageStore());
+  /* com isso o UserManageStore que é responsavel por manipular os dados do usuário podem ser acessados de qualquer parte do app */
+  /* ou seja os dados do usuário podem ser acessados de qualquer parte do app*/
+  GetIt.I.registerSingleton(UserManagerStore());
 }
 
 class MyApp extends StatelessWidget {
