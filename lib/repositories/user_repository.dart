@@ -25,6 +25,23 @@ class UserRepository {
     }
   }
 
+  Future<User> currentUser() async {
+    /* getting user data (from user logged) */
+    final parseUser = await ParseUser.currentUser();
+    if (parseUser != null) {
+      /* verifiyng if session token is valid we ill get the user from server */
+      final response =
+          await ParseUser.getCurrentUserFromServer(parseUser.sessionToken);
+      /* verifiyng if is valid, we will get the userData, else we ill logout the user from app/server */
+      if (response.success) {
+        return convertParseToUser(response.result);
+      } else {
+        await parseUser.logout();
+      }
+    }
+    return null;
+  }
+
 /* convertendo ao usuario para ser retornado */
   User convertParseToUser(ParseUser parseUser) {
     return User(
