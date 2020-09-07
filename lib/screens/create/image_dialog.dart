@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'dart:io';
+/* quando ele clicar na foto vai aparecer um dialog com a opção de excluir a foto */
 
 class ImageDialog extends StatelessWidget {
   ImageDialog({@required this.image, @required this.onDelete});
