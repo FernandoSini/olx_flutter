@@ -3,7 +3,7 @@
 import 'package:olx_mobx/models/User.dart';
 import 'package:olx_mobx/repositories/parse_errors.dart';
 import 'package:olx_mobx/repositories/table_keys.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 class UserRepository {
   /* creating a user */
