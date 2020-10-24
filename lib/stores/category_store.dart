@@ -37,6 +37,8 @@ abstract class _CategoryStore with Store {
       final categories = await CategoryRepository().getList();
       /* definindo categorias */
       setCategories(categories);
-    } catch (e) {}
+    } catch (e) {
+      setError(e);
+    }
   }
 }
