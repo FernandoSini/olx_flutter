@@ -9,13 +9,13 @@ class UserRepository {
   /* creating a user */
   Future<User> signUp(User user) async {
     /* creating a user on parse */
-    final parseUser = ParseUser(user.email, user.password, user.email);
+    var parseUser = ParseUser(user.email, user.password, user.email);
 
     parseUser.set<String>(keyUserName, user.name);
     parseUser.set<String>(keyUserPhone, user.phone);
     parseUser.set(keyUserType, user.type.index);
 
-    final response = await parseUser.signUp();
+    var response = await parseUser.signUp();
 
     /* tratando a resposta */
     if (response.success) {
@@ -27,10 +27,10 @@ class UserRepository {
 
   Future<User> currentUser() async {
     /* getting user data (from user logged) */
-    final parseUser = await ParseUser.currentUser();
+    var parseUser = await ParseUser.currentUser();
     if (parseUser != null) {
       /* verifiyng if session token is valid we ill get the user from server */
-      final response =
+      var response =
           await ParseUser.getCurrentUserFromServer(parseUser.sessionToken);
       /* verifiyng if is valid, we will get the userData, else we ill logout the user from app/server */
       if (response.success) {
@@ -54,9 +54,9 @@ class UserRepository {
   }
 
   Future<User> loginWithEmail(String email, String password) async {
-    final parseUser = ParseUser(email, password, null);
+    var parseUser = ParseUser(email, password, null);
 
-    final response = await parseUser.login();
+    var response = await parseUser.login();
     /* if login was successefully  we ill return user*/
     if (response.success) {
       return convertParseToUser(response.result);

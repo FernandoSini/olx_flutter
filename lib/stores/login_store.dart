@@ -86,7 +86,7 @@ abstract class _LoginStore with Store {
     loading = true;
 
     try {
-      final user = await UserRepository().loginWithEmail(email, pass);
+      var user = await UserRepository().loginWithEmail(email, pass);
       /* Pegando a instancia do user via get It, salvando os dados do usuario dentro do manager store */
       GetIt.I<UserManagerStore>().setUser(user);
     } catch (e) {

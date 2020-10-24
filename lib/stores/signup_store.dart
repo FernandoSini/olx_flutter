@@ -137,10 +137,10 @@ abstract class _SignUpStore with Store {
     /* deixando um tempo de duração de criacao da conta */
 
     /* criando uma instancia nova do userRpository */
-    final user = User(name: name, email: email, phone: phone, password: pass);
+    var user = User(name: name, email: email, phone: phone, password: pass);
 
     try {
-      final userData = await UserRepository().signUp(user);
+      var userData = await UserRepository().signUp(user);
       /* Pegando a instancia do user via get It, salvando os dados do usuario dentro do manager store */
       GetIt.I<UserManagerStore>().setUser(userData);
     } catch (e) {

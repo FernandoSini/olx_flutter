@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:olx_mobx/repositories/category_repository.dart';
+import 'package:olx_mobx/stores/category_store.dart';
 import 'package:olx_mobx/stores/page_store.dart';
 import 'package:olx_mobx/stores/user_manager_store.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
@@ -29,6 +31,7 @@ void setupLocators() {
   /* com isso o UserManageStore que é responsavel por manipular os dados do usuário podem ser acessados de qualquer parte do app */
   /* ou seja os dados do usuário podem ser acessados de qualquer parte do app*/
   GetIt.I.registerSingleton(UserManagerStore());
+  GetIt.I.registerSingleton(CategoryStore());
 }
 
 class MyApp extends StatelessWidget {

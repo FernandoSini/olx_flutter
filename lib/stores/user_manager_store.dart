@@ -21,7 +21,7 @@ abstract class _UserManagerStore with Store {
   bool get isLoggedIn => user != null;
 
   Future<void> _getCurrentUser() async {
-    final user = await UserRepository().currentUser();
+    var user = await UserRepository().currentUser();
     /* if has user logged in, we ill set user */
     setUser(user);
   }
