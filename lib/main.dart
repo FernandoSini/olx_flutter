@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:olx_mobx/repositories/category_repository.dart';
+import 'package:olx_mobx/repositories/cep_repository.dart';
+import 'package:olx_mobx/repositories/ibge_repository.dart';
 import 'package:olx_mobx/stores/category_store.dart';
 import 'package:olx_mobx/stores/page_store.dart';
 import 'package:olx_mobx/stores/user_manager_store.dart';
@@ -13,6 +15,8 @@ void main() async {
   await _inicializarParse();
   setupLocators();
   runApp(MyApp());
+
+  CepRepository().getAddressFromApi('04148050').then((value) => print(value));
 }
 
 Future<void> _inicializarParse() async {
