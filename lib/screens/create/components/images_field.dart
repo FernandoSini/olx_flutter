@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:olx_mobx/screens/create/image_source_modal.dart';
+import 'package:olx_mobx/screens/create/components/image_source_modal.dart';
 import 'package:olx_mobx/stores/create_store.dart';
 
 import 'image_dialog.dart';
