@@ -25,7 +25,7 @@ abstract class _CepStore with Store {
   void setCep(String value) => cep = value;
 
   @computed
-  String get clearCep => cep /* .replaceAll(new RegExp('[ˆ0-9]'), '') */;
+  String get clearCep => cep.replaceAll(RegExp("[\&\-\.']"), '');
 
   @observable
   Address address;

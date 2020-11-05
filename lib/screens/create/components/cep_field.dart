@@ -9,13 +9,14 @@ class CepField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         TextFormField(
           onChanged: cepStore.setCep,
           keyboardType: TextInputType.number,
           inputFormatters: [
             FilteringTextInputFormatter.digitsOnly,
-            //CepInputFormatter()
+            CepInputFormatter()
           ],
           decoration: InputDecoration(
             labelText: 'CEP *',
@@ -42,12 +43,14 @@ class CepField extends StatelessWidget {
                 color: Colors.red.withAlpha(100),
                 height: 50,
                 padding: const EdgeInsets.all(8),
+                alignment: Alignment.center,
                 child: Text(
                   cepStore.error,
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     color: Colors.red,
                   ),
+                  textAlign: TextAlign.center,
                 ),
               );
             } else {
@@ -56,6 +59,7 @@ class CepField extends StatelessWidget {
               return Container(
                 color: Colors.blue.withAlpha(150),
                 padding: const EdgeInsets.all(8),
+                alignment: Alignment.center,
                 child: Text(
                   "Localizacao : ${address.district}, ${address.cidade.nome} - ${address.estado.sigla}",
                   style: TextStyle(
