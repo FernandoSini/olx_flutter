@@ -10,8 +10,9 @@ class CepRepository {
     }
 
     /* limpando os dados caso esteja de preenchido de 0 a 9 */
-
-    final clearCep = cep/* .replaceAll(new RegExp('[ˆ0-9]'), '')  */;
+//lembrar que essa questão do cep.replaceall tanto aqui no ceprepository quanto
+//no cep store estao dando problemas com o cep input field no cep field
+    final clearCep = cep/* .replaceAll(new RegExp('[ˆ0-9]'), '')  */; 
     print(clearCep);
     if (clearCep.length != 8) {
       return Future.error("Cep Inválido1");
