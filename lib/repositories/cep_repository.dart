@@ -11,15 +11,17 @@ class CepRepository {
 
     /* limpando os dados caso esteja de preenchido de 0 a 9 */
 
-    final clearCep = cep; /* .replaceAll(RegExp("[ˆ0-9]"), ''); */
+    final clearCep = cep/* .replaceAll(new RegExp('[ˆ0-9]'), '')  */;
+    print(clearCep);
     if (clearCep.length != 8) {
       return Future.error("Cep Inválido1");
     }
-
+   
     final endpoint = "https://viacep.com.br/ws/$clearCep/json";
+    
 
     try {
-      /* o dado que vai ser retornado vai ser um map */
+      
       final response = await Dio().get<Map>(endpoint);
 
       /* se o cep for inválido mas conter os 8 numeros então vamos retornar um erro */
@@ -40,7 +42,7 @@ class CepRepository {
             .firstWhere((element) => element.sigla == response.data["uf"]),
       );
     } catch (e) {
-      return Future.error('Falha ao Buscar Cep');
+      return Future.error('Falha ao Buscar Cep ${e.toString()}');
     }
   }
 }
