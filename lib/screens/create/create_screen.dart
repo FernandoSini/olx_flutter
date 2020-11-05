@@ -6,6 +6,7 @@ import 'package:olx_mobx/stores/create_store.dart';
 
 import 'components/category_field.dart';
 import 'components/cep_field.dart';
+import 'components/hide_phone_field.dart';
 import 'components/images_field.dart';
 
 class CreateScreen extends StatelessWidget {
@@ -34,6 +35,7 @@ class CreateScreen extends StatelessWidget {
         ),
         elevation: 8,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
           children: [
             ImagesField(createStore),
@@ -66,6 +68,23 @@ class CreateScreen extends StatelessWidget {
                 FilteringTextInputFormatter.digitsOnly,
                 RealInputFormatter(centavos: true),
               ],
+            ),
+            HidePhoneField(createStore: createStore),
+            SizedBox(
+              height: 50,
+              child: RaisedButton(
+                onPressed: () {},
+                child: Text(
+                  "Enviar",
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+                textColor: Colors.white,
+                color: Colors.orange,
+                disabledColor: Colors.orange.withAlpha(120),
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              ),
             ),
           ],
         ),

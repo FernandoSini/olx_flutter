@@ -36,7 +36,10 @@ class CepField extends StatelessWidget {
               return Container();
             } else if (cepStore.address == null && cepStore.error == null) {
               /* indicando que o cep esta completo e carregando. */
-              return LinearProgressIndicator();
+              return LinearProgressIndicator(
+                valueColor: AlwaysStoppedAnimation(Colors.blue),
+                backgroundColor: Colors.transparent,
+              );
             } else if (cepStore.error != null) {
               /* vamos exibir o erro */
               return Container(
