@@ -95,18 +95,22 @@ class CreateScreen extends StatelessWidget {
                   builder: (_) {
                     return SizedBox(
                       height: 50,
-                      child: RaisedButton(
-                        onPressed: createStore.sendPressed,
-                        child: Text(
-                          "Enviar",
-                          style: TextStyle(
-                            fontSize: 18,
+                      child: GestureDetector(
+                        onTap: createStore.invalidSendPressed,
+                        child: RaisedButton(
+                          onPressed: createStore.sendPressed,
+                          child: Text(
+                            "Enviar",
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
                           ),
+                          textColor: Colors.white,
+                          color: Colors.orange,
+                          disabledColor: Colors.orange.withAlpha(120),
+                          materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
                         ),
-                        textColor: Colors.white,
-                        color: Colors.orange,
-                        disabledColor: Colors.orange.withAlpha(120),
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       ),
                     );
                   },

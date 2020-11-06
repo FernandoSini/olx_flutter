@@ -13,7 +13,7 @@ abstract class _CreateStore with Store {
   @computed /* esse computed vai informar se as imagens são validas */
   bool get imagesValid => imageList.isNotEmpty;
   String get imagesError {
-    if (imagesValid)
+    if (!showErrors || imagesValid)
       return null;
     else
       return 'Insira Imagens';
@@ -28,7 +28,7 @@ abstract class _CreateStore with Store {
   @computed
   bool get isTitleValid => title.length >= 6;
   String get titleError {
-    if (isTitleValid) {
+    if (!showErrors || isTitleValid) {
       return null;
     } else if (title.isEmpty) {
       return "Campo Obrigatorio";
@@ -46,7 +46,7 @@ abstract class _CreateStore with Store {
   @computed
   bool get isDescriptionValid => description.length >= 10;
   String get descriptionError {
-    if (isDescriptionValid) {
+    if (!showErrors || isDescriptionValid) {
       return null;
     } else if (description.isEmpty) {
       return "Campo Obrigatorio";
@@ -64,7 +64,7 @@ abstract class _CreateStore with Store {
   @computed
   bool get isCategoryValid => category != null;
   String get categoryError {
-    if (isCategoryValid) {
+    if (!showErrors || isCategoryValid) {
       return null;
     } else {
       return "Campo Obrigatório";
@@ -77,7 +77,7 @@ abstract class _CreateStore with Store {
   Address get address => cepStore.address;
   bool get isAddressValid => address != null;
   String get addressError {
-    if (isAddressValid) {
+    if (!showErrors || isAddressValid) {
       return null;
     } else {
       return "Campo Obrigatório";
@@ -103,7 +103,7 @@ abstract class _CreateStore with Store {
 
   bool get isPriceValid => price != null && price <= 9999999;
   String get priceError {
-    if (isPriceValid) {
+    if (!showErrors || isPriceValid) {
       return null;
     } else if (priceText.isEmpty) {
       return 'Campo Obrigatório';
@@ -131,7 +131,11 @@ abstract class _CreateStore with Store {
   @computed
   Function get sendPressed => isFormValid ? _send : null;
 
-  void _send(){
+  @observable
+  bool showErrors = false;
 
-  }
+  @action
+  void invalidSendPressed() => showErrors = true;
+
+  void _send() {}
 }

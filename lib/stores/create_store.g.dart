@@ -139,6 +139,21 @@ mixin _$CreateStore on _CreateStore, Store {
     });
   }
 
+  final _$showErrorsAtom = Atom(name: '_CreateStore.showErrors');
+
+  @override
+  bool get showErrors {
+    _$showErrorsAtom.reportRead();
+    return super.showErrors;
+  }
+
+  @override
+  set showErrors(bool value) {
+    _$showErrorsAtom.reportWrite(value, super.showErrors, () {
+      super.showErrors = value;
+    });
+  }
+
   final _$_CreateStoreActionController = ActionController(name: '_CreateStore');
 
   @override
@@ -197,6 +212,17 @@ mixin _$CreateStore on _CreateStore, Store {
   }
 
   @override
+  void invalidSendPressed() {
+    final _$actionInfo = _$_CreateStoreActionController.startAction(
+        name: '_CreateStore.invalidSendPressed');
+    try {
+      return super.invalidSendPressed();
+    } finally {
+      _$_CreateStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 title: ${title},
@@ -204,6 +230,7 @@ description: ${description},
 category: ${category},
 priceText: ${priceText},
 hidePhone: ${hidePhone},
+showErrors: ${showErrors},
 imagesValid: ${imagesValid},
 isTitleValid: ${isTitleValid},
 isDescriptionValid: ${isDescriptionValid},
