@@ -1,6 +1,7 @@
 import 'package:brasil_fields/formatter/real_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:olx_mobx/components/custom_drawer/custom_drawer.dart';
 import 'package:olx_mobx/stores/create_store.dart';
 
@@ -42,36 +43,51 @@ class CreateScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 ImagesField(createStore),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Titulo *',
-                    labelStyle: labelStyle,
-                    contentPadding: contentPadding,
-                  ),
+                Observer(
+                  builder: (_) {
+                    return TextFormField(
+                      onChanged: createStore.setTitle,
+                      decoration: InputDecoration(
+                        labelText: 'Titulo *',
+                        labelStyle: labelStyle,
+                        contentPadding: contentPadding,
+                        errorText: createStore.titleError,
+                      ),
+                    );
+                  },
                 ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Descrição *',
-                    labelStyle: labelStyle,
-                    contentPadding: contentPadding,
-                  ),
-                  maxLines: null,
+                Observer(
+                  builder: (_) {
+                    return TextFormField(
+                      onChanged: createStore.setDescription,
+                      decoration: InputDecoration(
+                          labelText: 'Descrição *',
+                          labelStyle: labelStyle,
+                          contentPadding: contentPadding,
+                          errorText: createStore.descriptionError),
+                      maxLines: null,
+                    );
+                  },
                 ),
                 CategoryField(createStore),
-                CepField(),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Preço *',
-                    labelStyle: labelStyle,
-                    contentPadding: contentPadding,
-                    prefixText: 'R\$ ',
-                  ),
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.digitsOnly,
-                    RealInputFormatter(centavos: true),
-                  ],
-                ),
+                CepField(createStore: createStore),
+                Observer(builder: (_) {
+                  return TextFormField(
+                    onChanged: createStore.setPrice,
+                    decoration: InputDecoration(
+                      errorText: createStore.priceError,
+                      labelText: 'Preço *',
+                      labelStyle: labelStyle,
+                      contentPadding: contentPadding,
+                      prefixText: 'R\$ ',
+                    ),
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                      RealInputFormatter(centavos: true),
+                    ],
+                  );
+                },),
                 HidePhoneField(createStore: createStore),
                 SizedBox(
                   height: 50,

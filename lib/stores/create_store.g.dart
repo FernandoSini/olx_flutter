@@ -16,6 +16,69 @@ mixin _$CreateStore on _CreateStore, Store {
       (_$imagesValidComputed ??= Computed<bool>(() => super.imagesValid,
               name: '_CreateStore.imagesValid'))
           .value;
+  Computed<bool> _$isTitleValidComputed;
+
+  @override
+  bool get isTitleValid =>
+      (_$isTitleValidComputed ??= Computed<bool>(() => super.isTitleValid,
+              name: '_CreateStore.isTitleValid'))
+          .value;
+  Computed<bool> _$isDescriptionValidComputed;
+
+  @override
+  bool get isDescriptionValid => (_$isDescriptionValidComputed ??=
+          Computed<bool>(() => super.isDescriptionValid,
+              name: '_CreateStore.isDescriptionValid'))
+      .value;
+  Computed<bool> _$isCategoryValidComputed;
+
+  @override
+  bool get isCategoryValid =>
+      (_$isCategoryValidComputed ??= Computed<bool>(() => super.isCategoryValid,
+              name: '_CreateStore.isCategoryValid'))
+          .value;
+  Computed<Address> _$addressComputed;
+
+  @override
+  Address get address => (_$addressComputed ??=
+          Computed<Address>(() => super.address, name: '_CreateStore.address'))
+      .value;
+  Computed<num> _$priceComputed;
+
+  @override
+  num get price => (_$priceComputed ??=
+          Computed<num>(() => super.price, name: '_CreateStore.price'))
+      .value;
+
+  final _$titleAtom = Atom(name: '_CreateStore.title');
+
+  @override
+  String get title {
+    _$titleAtom.reportRead();
+    return super.title;
+  }
+
+  @override
+  set title(String value) {
+    _$titleAtom.reportWrite(value, super.title, () {
+      super.title = value;
+    });
+  }
+
+  final _$descriptionAtom = Atom(name: '_CreateStore.description');
+
+  @override
+  String get description {
+    _$descriptionAtom.reportRead();
+    return super.description;
+  }
+
+  @override
+  set description(String value) {
+    _$descriptionAtom.reportWrite(value, super.description, () {
+      super.description = value;
+    });
+  }
 
   final _$categoryAtom = Atom(name: '_CreateStore.category');
 
@@ -29,6 +92,21 @@ mixin _$CreateStore on _CreateStore, Store {
   set category(Category value) {
     _$categoryAtom.reportWrite(value, super.category, () {
       super.category = value;
+    });
+  }
+
+  final _$priceTextAtom = Atom(name: '_CreateStore.priceText');
+
+  @override
+  String get priceText {
+    _$priceTextAtom.reportRead();
+    return super.priceText;
+  }
+
+  @override
+  set priceText(String value) {
+    _$priceTextAtom.reportWrite(value, super.priceText, () {
+      super.priceText = value;
     });
   }
 
@@ -50,11 +128,44 @@ mixin _$CreateStore on _CreateStore, Store {
   final _$_CreateStoreActionController = ActionController(name: '_CreateStore');
 
   @override
+  void setTitle(String value) {
+    final _$actionInfo = _$_CreateStoreActionController.startAction(
+        name: '_CreateStore.setTitle');
+    try {
+      return super.setTitle(value);
+    } finally {
+      _$_CreateStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setDescription(String value) {
+    final _$actionInfo = _$_CreateStoreActionController.startAction(
+        name: '_CreateStore.setDescription');
+    try {
+      return super.setDescription(value);
+    } finally {
+      _$_CreateStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setCategory(Category value) {
     final _$actionInfo = _$_CreateStoreActionController.startAction(
         name: '_CreateStore.setCategory');
     try {
       return super.setCategory(value);
+    } finally {
+      _$_CreateStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setPrice(String value) {
+    final _$actionInfo = _$_CreateStoreActionController.startAction(
+        name: '_CreateStore.setPrice');
+    try {
+      return super.setPrice(value);
     } finally {
       _$_CreateStoreActionController.endAction(_$actionInfo);
     }
@@ -74,9 +185,17 @@ mixin _$CreateStore on _CreateStore, Store {
   @override
   String toString() {
     return '''
+title: ${title},
+description: ${description},
 category: ${category},
+priceText: ${priceText},
 hidePhone: ${hidePhone},
-imagesValid: ${imagesValid}
+imagesValid: ${imagesValid},
+isTitleValid: ${isTitleValid},
+isDescriptionValid: ${isDescriptionValid},
+isCategoryValid: ${isCategoryValid},
+address: ${address},
+price: ${price}
     ''';
   }
 }
