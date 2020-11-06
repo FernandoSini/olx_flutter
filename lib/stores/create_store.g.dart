@@ -9,6 +9,14 @@ part of 'create_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$CreateStore on _CreateStore, Store {
+  Computed<bool> _$imagesValidComputed;
+
+  @override
+  bool get imagesValid =>
+      (_$imagesValidComputed ??= Computed<bool>(() => super.imagesValid,
+              name: '_CreateStore.imagesValid'))
+          .value;
+
   final _$categoryAtom = Atom(name: '_CreateStore.category');
 
   @override
@@ -67,7 +75,8 @@ mixin _$CreateStore on _CreateStore, Store {
   String toString() {
     return '''
 category: ${category},
-hidePhone: ${hidePhone}
+hidePhone: ${hidePhone},
+imagesValid: ${imagesValid}
     ''';
   }
 }

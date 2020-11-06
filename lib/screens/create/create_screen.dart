@@ -25,68 +25,73 @@ class CreateScreen extends StatelessWidget {
         title: Text("Criar Anuncio"),
         centerTitle: true,
       ),
-      body: Card(
-        clipBehavior: Clip.antiAlias,
-        /* fora do widget sempre o margin  */
-        margin: const EdgeInsets.symmetric(horizontal: 32),
-        /* definindo a borda do card email */
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-        elevation: 8,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ImagesField(createStore),
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: 'Titulo *',
-                labelStyle: labelStyle,
-                contentPadding: contentPadding,
-              ),
+      body: Container(
+        alignment: Alignment.center,
+        child: SingleChildScrollView(
+          child: Card(
+            clipBehavior: Clip.antiAlias,
+            /* fora do widget sempre o margin  */
+            margin: const EdgeInsets.symmetric(horizontal: 32),
+            /* definindo a borda do card email */
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
             ),
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: 'Descrição *',
-                labelStyle: labelStyle,
-                contentPadding: contentPadding,
-              ),
-              maxLines: null,
-            ),
-            CategoryField(createStore),
-            CepField(),
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: 'Preço *',
-                labelStyle: labelStyle,
-                contentPadding: contentPadding,
-                prefixText: 'R\$ ',
-              ),
-              keyboardType: TextInputType.number,
-              inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly,
-                RealInputFormatter(centavos: true),
-              ],
-            ),
-            HidePhoneField(createStore: createStore),
-            SizedBox(
-              height: 50,
-              child: RaisedButton(
-                onPressed: () {},
-                child: Text(
-                  "Enviar",
-                  style: TextStyle(
-                    fontSize: 18,
+            elevation: 8,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ImagesField(createStore),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Titulo *',
+                    labelStyle: labelStyle,
+                    contentPadding: contentPadding,
                   ),
                 ),
-                textColor: Colors.white,
-                color: Colors.orange,
-                disabledColor: Colors.orange.withAlpha(120),
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              ),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Descrição *',
+                    labelStyle: labelStyle,
+                    contentPadding: contentPadding,
+                  ),
+                  maxLines: null,
+                ),
+                CategoryField(createStore),
+                CepField(),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Preço *',
+                    labelStyle: labelStyle,
+                    contentPadding: contentPadding,
+                    prefixText: 'R\$ ',
+                  ),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    RealInputFormatter(centavos: true),
+                  ],
+                ),
+                HidePhoneField(createStore: createStore),
+                SizedBox(
+                  height: 50,
+                  child: RaisedButton(
+                    onPressed: () {},
+                    child: Text(
+                      "Enviar",
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                    textColor: Colors.white,
+                    color: Colors.orange,
+                    disabledColor: Colors.orange.withAlpha(120),
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
