@@ -49,6 +49,20 @@ mixin _$CreateStore on _CreateStore, Store {
   num get price => (_$priceComputed ??=
           Computed<num>(() => super.price, name: '_CreateStore.price'))
       .value;
+  Computed<bool> _$isFormValidComputed;
+
+  @override
+  bool get isFormValid =>
+      (_$isFormValidComputed ??= Computed<bool>(() => super.isFormValid,
+              name: '_CreateStore.isFormValid'))
+          .value;
+  Computed<Function> _$sendPressedComputed;
+
+  @override
+  Function get sendPressed =>
+      (_$sendPressedComputed ??= Computed<Function>(() => super.sendPressed,
+              name: '_CreateStore.sendPressed'))
+          .value;
 
   final _$titleAtom = Atom(name: '_CreateStore.title');
 
@@ -195,7 +209,9 @@ isTitleValid: ${isTitleValid},
 isDescriptionValid: ${isDescriptionValid},
 isCategoryValid: ${isCategoryValid},
 address: ${address},
-price: ${price}
+price: ${price},
+isFormValid: ${isFormValid},
+sendPressed: ${sendPressed}
     ''';
   }
 }

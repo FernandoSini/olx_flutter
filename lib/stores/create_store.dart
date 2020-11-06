@@ -44,7 +44,7 @@ abstract class _CreateStore with Store {
   void setDescription(String value) => description = value;
 
   @computed
-  bool get isDescriptionValid => title.length >= 6;
+  bool get isDescriptionValid => description.length >= 10;
   String get descriptionError {
     if (isDescriptionValid) {
       return null;
@@ -117,4 +117,21 @@ abstract class _CreateStore with Store {
 
   @action
   void setHidePhone(bool value) => hidePhone = value;
+
+/* validando o formulário todo */
+  @computed
+  bool get isFormValid =>
+      imagesValid &&
+      isTitleValid &&
+      isDescriptionValid &&
+      isCategoryValid &&
+      isAddressValid &&
+      isPriceValid;
+
+  @computed
+  Function get sendPressed => isFormValid ? _send : null;
+
+  void _send(){
+
+  }
 }

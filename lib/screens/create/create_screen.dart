@@ -71,39 +71,45 @@ class CreateScreen extends StatelessWidget {
                 ),
                 CategoryField(createStore),
                 CepField(createStore: createStore),
-                Observer(builder: (_) {
-                  return TextFormField(
-                    onChanged: createStore.setPrice,
-                    decoration: InputDecoration(
-                      errorText: createStore.priceError,
-                      labelText: 'Preço *',
-                      labelStyle: labelStyle,
-                      contentPadding: contentPadding,
-                      prefixText: 'R\$ ',
-                    ),
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.digitsOnly,
-                      RealInputFormatter(centavos: true),
-                    ],
-                  );
-                },),
-                HidePhoneField(createStore: createStore),
-                SizedBox(
-                  height: 50,
-                  child: RaisedButton(
-                    onPressed: () {},
-                    child: Text(
-                      "Enviar",
-                      style: TextStyle(
-                        fontSize: 18,
+                Observer(
+                  builder: (_) {
+                    return TextFormField(
+                      onChanged: createStore.setPrice,
+                      decoration: InputDecoration(
+                        errorText: createStore.priceError,
+                        labelText: 'Preço *',
+                        labelStyle: labelStyle,
+                        contentPadding: contentPadding,
+                        prefixText: 'R\$ ',
                       ),
-                    ),
-                    textColor: Colors.white,
-                    color: Colors.orange,
-                    disabledColor: Colors.orange.withAlpha(120),
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        RealInputFormatter(centavos: true),
+                      ],
+                    );
+                  },
+                ),
+                HidePhoneField(createStore: createStore),
+                Observer(
+                  builder: (_) {
+                    return SizedBox(
+                      height: 50,
+                      child: RaisedButton(
+                        onPressed: createStore.sendPressed,
+                        child: Text(
+                          "Enviar",
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
+                        textColor: Colors.white,
+                        color: Colors.orange,
+                        disabledColor: Colors.orange.withAlpha(120),
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
