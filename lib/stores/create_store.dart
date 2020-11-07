@@ -160,6 +160,10 @@ abstract class _CreateStore with Store {
     anuncio.address = address;
     anuncio.user = GetIt.I<UserManagerStore>().user;
 
+   /*  /* forcaondo o erro do errorbox  testando somente*/
+    error = 'Falha ao salvar';
+    return; */
+
     loading = true;
 
     try {

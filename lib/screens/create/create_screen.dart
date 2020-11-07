@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:olx_mobx/components/custom_drawer/custom_drawer.dart';
+import 'package:olx_mobx/components/error_box.dart';
 import 'package:olx_mobx/stores/create_store.dart';
 
 import 'components/category_field.dart';
@@ -41,13 +42,22 @@ class CreateScreen extends StatelessWidget {
             child: Observer(
               builder: (_) {
                 if (createStore.loading) {
-                  return Column(
-                    children: [
-                      Text(
-                        "Salvando anuncio",
-                        style: TextStyle(fontSize: 18, color: Colors.blue),
-                      ),
-                    ],
+                  return Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        Text(
+                          "Salvando anuncio",
+                          style: TextStyle(fontSize: 18, color: Colors.blue),
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation(Colors.blue),
+                        )
+                      ],
+                    ),
                   );
                 } else {
                   return Column(
@@ -103,6 +113,9 @@ class CreateScreen extends StatelessWidget {
                         },
                       ),
                       HidePhoneField(createStore: createStore),
+                      /* é so para teste Observer(builder: (_) {
+                        return ErrorBox(message: createStore.error);
+                      }), */
                       Observer(
                         builder: (_) {
                           return SizedBox(
