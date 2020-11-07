@@ -1,7 +1,11 @@
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:olx_mobx/models/Address.dart';
+import 'package:olx_mobx/models/Anuncio.dart';
 import 'package:olx_mobx/models/Category.dart';
+import 'package:olx_mobx/repositories/anuncio_repository.dart';
 import 'package:olx_mobx/stores/cep_store.dart';
+import 'package:olx_mobx/stores/user_manager_store.dart';
 part 'create_store.g.dart';
 
 class CreateStore = _CreateStore with _$CreateStore;
@@ -137,5 +141,32 @@ abstract class _CreateStore with Store {
   @action
   void invalidSendPressed() => showErrors = true;
 
-  void _send() {}
+  @observable
+  bool loading = false;
+
+  @observable
+  String error = "";
+
+  @action
+  Future<void> _send() async {
+    final anuncio = Anuncio();
+
+    anuncio.title = title;
+    anuncio.description = description;
+    anuncio.category = category;
+    anuncio.price = price;
+    anuncio.hidePhone = hidePhone;
+    anuncio.images = imageList;
+    anuncio.address = address;
+    anuncio.user = GetIt.I<UserManagerStore>().user;
+
+    loading = true;
+
+    try {
+      final response = await AnuncioRepository().save(anuncio);
+    } catch (e) {
+      error = e;
+    }
+    loading = false;
+  }
 }
