@@ -118,7 +118,7 @@ abstract class _CreateStore with Store {
   @action
   void setHidePhone(bool value) => hidePhone = value;
 
-/* validando o formulário todo */
+  /* validando o formulário todo */
   @computed
   bool get isFormValid =>
       imagesValid &&
