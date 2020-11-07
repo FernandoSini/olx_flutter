@@ -147,6 +147,9 @@ abstract class _CreateStore with Store {
   @observable
   String error = "";
 
+  @observable
+  Anuncio savedAnuncio;
+
   @action
   Future<void> _send() async {
     final anuncio = Anuncio();
@@ -160,14 +163,14 @@ abstract class _CreateStore with Store {
     anuncio.address = address;
     anuncio.user = GetIt.I<UserManagerStore>().user;
 
-   /*  /* forcaondo o erro do errorbox  testando somente*/
+    /*  /* forcaondo o erro do errorbox  testando somente*/
     error = 'Falha ao salvar';
     return; */
 
     loading = true;
 
     try {
-      final response = await AnuncioRepository().save(anuncio);
+       savedAnuncio = await AnuncioRepository().save(anuncio);
     } catch (e) {
       error = e;
     }

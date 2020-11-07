@@ -6,12 +6,13 @@ import 'dart:io';
 import 'package:path/path.dart' as path;
 
 class AnuncioRepository {
-  Future<void> save(Anuncio anuncio) async {
+  Future<Anuncio> save(Anuncio anuncio) async {
     try {
       final parseImages = await saveImages(anuncio.images);
 
       /* vamos vincular o anuncio ao user */
-      final parseUser = await ParseUser.currentUser()..set(keyUserId, anuncio.user.id);
+      final parseUser = await ParseUser.currentUser()
+        ..set(keyUserId, anuncio.user.id);
 
       /* criando o objeto anuncio presente na tabela Anuncio */
       final anuncioObject = ParseObject(keyAnuncioTable);
@@ -43,11 +44,11 @@ class AnuncioRepository {
             ..set(keyCategoryId, anuncio.category.id));
       final response = await anuncioObject.save();
       if (response.success) {
-        return response.result;
+        return Anuncio.fromParse(response.result);
       } else {
         return Future.error(ParseErrors.getDescription(response.error.code));
       }
-    }  catch (e) {
+    } catch (e) {
       return Future.error("Falha ao salvar anuncio");
     }
   }
