@@ -4,6 +4,7 @@ import 'package:olx_mobx/repositories/category_repository.dart';
 import 'package:olx_mobx/repositories/cep_repository.dart';
 import 'package:olx_mobx/repositories/ibge_repository.dart';
 import 'package:olx_mobx/stores/category_store.dart';
+import 'package:olx_mobx/stores/home_store.dart';
 import 'package:olx_mobx/stores/page_store.dart';
 import 'package:olx_mobx/stores/user_manager_store.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
@@ -15,8 +16,6 @@ void main() async {
   await _inicializarParse();
   setupLocators();
   runApp(MyApp());
-
-  
 }
 
 Future<void> _inicializarParse() async {
@@ -32,6 +31,7 @@ Future<void> _inicializarParse() async {
 void setupLocators() {
   /* Só pode ter um get_it no projeto, singleton é um objeto que só pode existir uma vez no projeto */
   GetIt.I.registerSingleton(PageStore());
+  GetIt.I.registerSingleton(HomeStore());
   /* com isso o UserManageStore que é responsavel por manipular os dados do usuário podem ser acessados de qualquer parte do app */
   /* ou seja os dados do usuário podem ser acessados de qualquer parte do app*/
   GetIt.I.registerSingleton(UserManagerStore());

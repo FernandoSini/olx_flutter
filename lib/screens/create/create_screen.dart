@@ -25,7 +25,8 @@ class _CreateScreenState extends State<CreateScreen> {
   @override
   void initState() {
     super.initState();
-    when((_) => createStore.savedAnuncio != null, () {
+    when((_) => createStore.savedAnuncio /* != null */, () {
+      //quando o saved store for true, o a pagina será 0
       /* observar a reacao do saved anuncio e realizar uma acao quando tiver 
       uma modificacao ,
        o when é trigado uma vez e n precisa dar dispose*/

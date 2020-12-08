@@ -187,13 +187,13 @@ mixin _$CreateStore on _CreateStore, Store {
   final _$savedAnuncioAtom = Atom(name: '_CreateStore.savedAnuncio');
 
   @override
-  Anuncio get savedAnuncio {
+  bool get savedAnuncio {
     _$savedAnuncioAtom.reportRead();
     return super.savedAnuncio;
   }
 
   @override
-  set savedAnuncio(Anuncio value) {
+  set savedAnuncio(bool value) {
     _$savedAnuncioAtom.reportWrite(value, super.savedAnuncio, () {
       super.savedAnuncio = value;
     });

@@ -147,8 +147,9 @@ abstract class _CreateStore with Store {
   @observable
   String error = "";
 
+/* usando pra saber se o anuncio foi salvo ou não */
   @observable
-  Anuncio savedAnuncio;
+  bool savedAnuncio = false;
 
   @action
   Future<void> _send() async {
@@ -170,7 +171,8 @@ abstract class _CreateStore with Store {
     loading = true;
 
     try {
-       savedAnuncio = await AnuncioRepository().save(anuncio);
+      await AnuncioRepository().save(anuncio);
+      savedAnuncio = true;
     } catch (e) {
       error = e;
     }

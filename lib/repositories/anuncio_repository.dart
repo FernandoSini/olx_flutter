@@ -6,7 +6,7 @@ import 'dart:io';
 import 'package:path/path.dart' as path;
 
 class AnuncioRepository {
-  Future<Anuncio> save(Anuncio anuncio) async {
+  Future<void> save(Anuncio anuncio) async {
     try {
       final parseImages = await saveImages(anuncio.images);
 
@@ -44,7 +44,7 @@ class AnuncioRepository {
             ..set(keyCategoryId, anuncio.category.id));
       final response = await anuncioObject.save();
       if (response.success) {
-        return Anuncio.fromParse(response.result);
+        return; //Anuncio.fromParse(response.result);
       } else {
         return Future.error(ParseErrors.getDescription(response.error.code));
       }
