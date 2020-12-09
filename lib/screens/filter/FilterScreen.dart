@@ -11,7 +11,7 @@ import 'components/price_range_field.dart';
 class FilterScreen extends StatelessWidget {
   /* store que vai gerenciar o estado da tela de filtros, 
   o get it é usado pra definir os dados que já serão pré carregados/definidos */
-  final FilterStore filterStore = GetIt.I<HomeStore>().filter;
+  final FilterStore filterStore = GetIt.I<HomeStore>().clonedFilter;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

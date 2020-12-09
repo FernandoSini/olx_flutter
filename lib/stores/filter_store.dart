@@ -11,10 +11,14 @@ const VENDOR_TYPE_PROFESSIONAL = 1 << 1; //aqui é deslocado 1 vez
 class FilterStore = _FilterStoreBase with _$FilterStore;
 
 abstract class _FilterStoreBase with Store {
-  _FilterStoreBase(
-      {this.orderBy, this.minPrice, this.maxPrice, this.vendorType});
+  _FilterStoreBase({
+    this.orderBy = OrderBy.DATE,
+    this.minPrice,
+    this.maxPrice,
+    this.vendorType = VENDOR_TYPE_PARTICULAR,
+  });
   @observable
-  OrderBy orderBy = OrderBy.DATE;
+  OrderBy orderBy;
 
   @action
   void setOrderBy(OrderBy value) => orderBy = value;
@@ -40,7 +44,7 @@ abstract class _FilterStoreBase with Store {
           : null;
 
   @observable
-  int vendorType = VENDOR_TYPE_PARTICULAR;
+  int vendorType;
 
   @action
   void selectVendorType(int value) =>
