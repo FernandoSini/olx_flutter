@@ -9,6 +9,35 @@ part of 'filter_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$FilterStore on _FilterStoreBase, Store {
+  Computed<String> _$priceErrorComputed;
+
+  @override
+  String get priceError =>
+      (_$priceErrorComputed ??= Computed<String>(() => super.priceError,
+              name: '_FilterStoreBase.priceError'))
+          .value;
+  Computed<bool> _$isTypeParticularComputed;
+
+  @override
+  bool get isTypeParticular => (_$isTypeParticularComputed ??= Computed<bool>(
+          () => super.isTypeParticular,
+          name: '_FilterStoreBase.isTypeParticular'))
+      .value;
+  Computed<bool> _$isTypeProfessionalComputed;
+
+  @override
+  bool get isTypeProfessional => (_$isTypeProfessionalComputed ??=
+          Computed<bool>(() => super.isTypeProfessional,
+              name: '_FilterStoreBase.isTypeProfessional'))
+      .value;
+  Computed<bool> _$isFormValidComputed;
+
+  @override
+  bool get isFormValid =>
+      (_$isFormValidComputed ??= Computed<bool>(() => super.isFormValid,
+              name: '_FilterStoreBase.isFormValid'))
+          .value;
+
   final _$orderByAtom = Atom(name: '_FilterStoreBase.orderBy');
 
   @override
@@ -21,6 +50,51 @@ mixin _$FilterStore on _FilterStoreBase, Store {
   set orderBy(OrderBy value) {
     _$orderByAtom.reportWrite(value, super.orderBy, () {
       super.orderBy = value;
+    });
+  }
+
+  final _$minPriceAtom = Atom(name: '_FilterStoreBase.minPrice');
+
+  @override
+  int get minPrice {
+    _$minPriceAtom.reportRead();
+    return super.minPrice;
+  }
+
+  @override
+  set minPrice(int value) {
+    _$minPriceAtom.reportWrite(value, super.minPrice, () {
+      super.minPrice = value;
+    });
+  }
+
+  final _$maxPriceAtom = Atom(name: '_FilterStoreBase.maxPrice');
+
+  @override
+  int get maxPrice {
+    _$maxPriceAtom.reportRead();
+    return super.maxPrice;
+  }
+
+  @override
+  set maxPrice(int value) {
+    _$maxPriceAtom.reportWrite(value, super.maxPrice, () {
+      super.maxPrice = value;
+    });
+  }
+
+  final _$vendorTypeAtom = Atom(name: '_FilterStoreBase.vendorType');
+
+  @override
+  int get vendorType {
+    _$vendorTypeAtom.reportRead();
+    return super.vendorType;
+  }
+
+  @override
+  set vendorType(int value) {
+    _$vendorTypeAtom.reportWrite(value, super.vendorType, () {
+      super.vendorType = value;
     });
   }
 
@@ -39,9 +113,49 @@ mixin _$FilterStore on _FilterStoreBase, Store {
   }
 
   @override
+  void setMinPrice(int minValue) {
+    final _$actionInfo = _$_FilterStoreBaseActionController.startAction(
+        name: '_FilterStoreBase.setMinPrice');
+    try {
+      return super.setMinPrice(minValue);
+    } finally {
+      _$_FilterStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setMaxPrice(int maxValue) {
+    final _$actionInfo = _$_FilterStoreBaseActionController.startAction(
+        name: '_FilterStoreBase.setMaxPrice');
+    try {
+      return super.setMaxPrice(maxValue);
+    } finally {
+      _$_FilterStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void selectVendorType(int value) {
+    final _$actionInfo = _$_FilterStoreBaseActionController.startAction(
+        name: '_FilterStoreBase.selectVendorType');
+    try {
+      return super.selectVendorType(value);
+    } finally {
+      _$_FilterStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
-orderBy: ${orderBy}
+orderBy: ${orderBy},
+minPrice: ${minPrice},
+maxPrice: ${maxPrice},
+vendorType: ${vendorType},
+priceError: ${priceError},
+isTypeParticular: ${isTypeParticular},
+isTypeProfessional: ${isTypeProfessional},
+isFormValid: ${isFormValid}
     ''';
   }
 }
