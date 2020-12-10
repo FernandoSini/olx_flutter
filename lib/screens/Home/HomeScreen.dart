@@ -78,6 +78,71 @@ class HomeScreen extends StatelessWidget {
         body: Column(
           children: [
             TopBar(),
+            Expanded(
+              child: Observer(
+                builder: (_) {
+                  if (homeStore.error != null)
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.error,
+                          color: Colors.white,
+                          size: 100,
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Text(
+                          'Ocorreu um erro ${homeStore.error}',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    );
+                  if (homeStore.loading)
+                    return Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation(Colors.white),
+                      ),
+                    );
+                  if (homeStore.listaAnuncios.isEmpty)
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.border_clear,
+                            color: Colors.white,
+                            size: 100,
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Text(
+                            'Hmmm... Nenhum Anuncio foi encontrado ',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  return Container(
+                    height: 0,
+                    width: 0,
+                  );
+                },
+              ),
+            )
           ],
         ),
       ),
