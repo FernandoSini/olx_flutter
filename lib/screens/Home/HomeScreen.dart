@@ -40,7 +40,7 @@ class HomeScreen extends StatelessWidget {
                 );
               } else {
                 return GestureDetector(
-                  /* constraints vai definir qual o tamanho minimo e o maximo podem ter */
+                  /* constraints vai definir qual o tamanho minimo e o maximo que eles podem ter */
                   child: LayoutBuilder(
                     builder: (context, constraints) {
                       return Container(
