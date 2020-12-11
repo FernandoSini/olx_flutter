@@ -31,6 +31,7 @@ class Anuncio {
       estado: Estados(sigla: object.get<String>(keyAnuncioEstado)),
     );
     views = object.get<int>(keyAnuncioViews, defaultValue: 0);
+    price = object.get<num>(keyAnuncioPrice);
     user = UserRepository()
         .convertParseToUser(object.get<ParseUser>(keyAnuncioAnunciante));
     category = Category.fromParse(object.get<ParseObject>(keyAnuncioCategory));

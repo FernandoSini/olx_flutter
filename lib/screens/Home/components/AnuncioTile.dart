@@ -22,7 +22,43 @@ class AnuncioTile extends StatelessWidget {
               height: 135,
               width: 127,
               child: CachedNetworkImage(
-                imageUrl: anuncio.images.first,
+                imageUrl: anuncio.images.isEmpty
+                    ? 'https://static.thenounproject.com/png/194055-200.png'
+                    : anuncio.images.first,
+                fit: BoxFit.cover,
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      anuncio.title,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Text(
+                      'R\$ ${anuncio.price.toStringAsFixed(2)}',
+                      style: TextStyle(
+                        fontSize: 19,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Text(
+                      '${anuncio.createdDate} - '
+                      '${anuncio.address.cidade.nome} -'
+                      '${anuncio.address.estado.sigla}',
+                      style:
+                          TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
+                    )
+                  ],
+                ),
               ),
             )
           ],
