@@ -5,6 +5,7 @@ import 'package:olx_mobx/components/custom_drawer/custom_drawer.dart';
 import 'package:olx_mobx/screens/Home/components/TopBar.dart';
 import 'package:olx_mobx/stores/home_store.dart';
 
+import 'components/AnuncioTile.dart';
 import 'components/SearchDialog.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -136,9 +137,11 @@ class HomeScreen extends StatelessWidget {
                         ],
                       ),
                     );
-                  return Container(
-                    height: 0,
-                    width: 0,
+                  return ListView.builder(
+                    itemCount: homeStore.listaAnuncios.length,
+                    itemBuilder: (_, index) {
+                      return AnuncioTile(homeStore.listaAnuncios[index]);
+                    },
                   );
                 },
               ),
