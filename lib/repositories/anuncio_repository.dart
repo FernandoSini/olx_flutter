@@ -10,13 +10,17 @@ import 'package:path/path.dart' as path;
 
 class AnuncioRepository {
   Future<List<Anuncio>> getHomeAnuncioList(
-      {FilterStore filter, String search, Category category}) async {
+      {FilterStore filter, String search, Category category, int page}) async {
     final queryBuilder =
         QueryBuilder<ParseObject>(ParseObject(keyAnuncioTable));
     /* trazendo os anuncios ativos */
     queryBuilder.whereEqualTo(keyAnuncioStatus, AnuncioStatus.ACTIVE.index);
+
     /* exibindo um limite de quantidade anuncios */
-    queryBuilder.setLimit(20);
+    queryBuilder.setLimit(10);
+    /* pegando as paginas e aplicando na query, 
+    pulando uma quantidade de itens que é o numero da pagina * a quantidade de itens */
+    queryBuilder.setAmountToSkip(page * 10);
 
     /* devemos incluir os objetos que queremos/ de nosso interesse */
     queryBuilder.includeObject([keyAnuncioAnunciante, keyAnuncioCategory]);

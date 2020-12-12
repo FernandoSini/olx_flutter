@@ -105,7 +105,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ],
                     );
-                  if (homeStore.loading)
+                  if (homeStore.showProgress)
                     return Center(
                       child: CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation(Colors.white),
@@ -138,9 +138,19 @@ class HomeScreen extends StatelessWidget {
                       ),
                     );
                   return ListView.builder(
-                    itemCount: homeStore.listaAnuncios.length,
+                    itemCount: homeStore.itemCount,
                     itemBuilder: (_, index) {
-                      return AnuncioTile(homeStore.listaAnuncios[index]);
+                      if (index < homeStore.listaAnuncios.length)
+                        return AnuncioTile(homeStore.listaAnuncios[index]);
+                      homeStore.loadNextPage();
+                      return Container(
+                        height: 10,
+                        child: LinearProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation(
+                            Colors.blueAccent[700],
+                          ),
+                        ),
+                      );
                     },
                   );
                 },

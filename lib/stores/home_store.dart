@@ -19,10 +19,11 @@ abstract class _HomeStoreBase with Store {
           /* quando qualuqer um dos 3 forem modificados o autorun será rodado e ira buscar uma nova lista de anuncio baseado nos 3 requisitos */
           search: search,
           category: category,
+          page: page,
         );
-        listaAnuncios.clear();
-        listaAnuncios.addAll(
-            newAnuncios); //monitorando a lista caso tenha alguma mudanca
+        addNovosAnuncios(newAnuncios);
+        /*  listaAnuncios.addAll(
+            newAnuncios); //monitorando a lista caso tenha alguma mudanca */
         setError(null);
         setLoading(false);
       } catch (e) {
@@ -37,14 +38,20 @@ abstract class _HomeStoreBase with Store {
   String search = "";
 
   @action
-  void setSearch(String value) => search = value;
+  void setSearch(String value) {
+    search = value;
+    resetPage();
+  }
 
   /* mostrando a categoria selecionada */
   @observable
   Category category;
 
   @action
-  void setCategory(Category value) => category = value;
+  void setCategory(Category value) {
+    category = value;
+    resetPage();
+  }
 
   /*vai aplicar/definir os filtros   */
   @observable
@@ -54,7 +61,10 @@ abstract class _HomeStoreBase with Store {
   FilterStore get clonedFilter => filter.clone();
 
   @action
-  void setFilter(FilterStore filterValue) => filter = filterValue;
+  void setFilter(FilterStore filterValue) {
+    filter = filterValue;
+    resetPage();
+  }
 
   @observable
   String error;
@@ -68,4 +78,40 @@ abstract class _HomeStoreBase with Store {
 
   @action
   void setLoading(bool value) => loading = value;
+
+  /* paginacao, caso n tenha dados carrega mais dados da outra pagina */
+  @observable
+  int page = 0;
+
+  /* carregar os anuncios da proxima pagina */
+  @action
+  void loadNextPage() {
+    page++;
+  }
+
+  @observable
+  bool lastPage = false;
+
+  @action
+  void addNovosAnuncios(List<Anuncio> novosAnuncios) {
+    print("maconha das brabas ${novosAnuncios.length}");
+    /* se o tamanho da lista for menor que 10 siginifica que ja chegou no final, n tem mais item pra adicionar */
+    if (novosAnuncios.length < 10) lastPage = true;
+    listaAnuncios.addAll(novosAnuncios);
+  }
+
+  /* vai permitir adicionar mais um item que será o de loading na hora de carregar a pagina */
+  @computed
+  int get itemCount =>
+      lastPage ? listaAnuncios.length : listaAnuncios.length + 1;
+
+  void resetPage() {
+    page = 0;
+    listaAnuncios.clear();
+    lastPage = false;
+  }
+
+/* arrumando um erro entre os loadings pra só chamar o circular indicator quando tiver nada */
+  @computed
+  bool get showProgress => loading && listaAnuncios.isEmpty;
 }
