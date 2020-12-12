@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:olx_mobx/models/Anuncio.dart';
+import 'package:olx_mobx/helpers/extensions.dart';
 
 class AnuncioTile extends StatelessWidget {
   AnuncioTile(this.anuncio);
@@ -44,14 +45,14 @@ class AnuncioTile extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'R\$ ${anuncio.price.toStringAsFixed(2)}',
+                      '${anuncio.price.formattedMoney()}',
                       style: TextStyle(
                         fontSize: 19,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     Text(
-                      '${anuncio.createdDate} - '
+                      '${anuncio.createdDate.formattedDate()} - '
                       '${anuncio.address.cidade.nome} -'
                       '${anuncio.address.estado.sigla}',
                       style:

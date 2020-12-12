@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:olx_mobx/repositories/category_repository.dart';
 import 'package:olx_mobx/repositories/cep_repository.dart';
@@ -45,13 +46,23 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'olx_mobx',
       theme: ThemeData(
-          primaryColor: Colors.blueAccent[700],
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          scaffoldBackgroundColor: Colors.blueAccent[700],
-          cursorColor: Colors.black,
-          appBarTheme: AppBarTheme(
-            elevation: 0,
-          )),
+        primaryColor: Colors.blueAccent[700],
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        scaffoldBackgroundColor: Colors.blueAccent[700],
+        textSelectionTheme: TextSelectionThemeData(cursorColor: Colors.black),
+        //cursorColor: Colors.black, caso de errado o textSelection
+        appBarTheme: AppBarTheme(
+          elevation: 0,
+        ),
+      ),
+      supportedLocales: const [
+        Locale('pt', 'BR'),
+      ],
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+      ],
       home: BaseScreen(),
       debugShowCheckedModeBanner: false,
     );
