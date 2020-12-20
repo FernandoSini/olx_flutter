@@ -4,6 +4,7 @@ import 'package:olx_mobx/models/Anuncio.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 
 import 'components/AnunciantePanel.dart';
+import 'components/BottomBar.dart';
 import 'components/DescriptionPanel.dart';
 import 'components/LocationPanel.dart';
 import 'components/MainPanel.dart';
@@ -20,50 +21,55 @@ class AnuncioScreen extends StatelessWidget {
         title: Text("Anúncio"),
         centerTitle: true,
       ),
-      body: ListView(
-        physics: BouncingScrollPhysics(),
+      body: Stack(
         children: [
-          Container(
-            height: 280,
-            child: Carousel(
-              images: anuncio.images
-                  .map(
-                    /* Cached imageprovider evita que fique buscando a imagem no server */
-                    (url) => CachedNetworkImageProvider(url),
-                  )
-                  .toList(),
-              dotSize: 4,
-              dotBgColor: Colors.transparent,
-              dotColor: Colors.orange,
-              autoplay: false,
-            ),
+          ListView(
+            physics: BouncingScrollPhysics(),
+            children: [
+              Container(
+                height: 280,
+                child: Carousel(
+                  images: anuncio.images
+                      .map(
+                        /* Cached imageprovider evita que fique buscando a imagem no server */
+                        (url) => CachedNetworkImageProvider(url),
+                      )
+                      .toList(),
+                  dotSize: 4,
+                  dotBgColor: Colors.transparent,
+                  dotColor: Colors.orange,
+                  autoplay: false,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    MainPanel(anuncio),
+                    Divider(
+                      color: Colors.grey[500],
+                    ),
+                    DescriptionPanel(anuncio),
+                    Divider(
+                      color: Colors.grey[500],
+                    ),
+                    LocationPanel(anuncio),
+                    Divider(
+                      color: Colors.grey[500],
+                    ),
+                    AnunciantePanel(anuncio),
+                    const SizedBox(
+                      height: 120,
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                MainPanel(anuncio),
-                Divider(
-                  color: Colors.grey[500],
-                ),
-                DescriptionPanel(anuncio),
-                Divider(
-                  color: Colors.grey[500],
-                ),
-                LocationPanel(anuncio),
-                Divider(
-                  color: Colors.grey[500],
-                ),
-                AnunciantePanel(anuncio),
-                const SizedBox(
-                  height: 16,
-                ),
-              ],
-            ),
-          ),
+          BottomBar(anuncio),
         ],
       ),
     );

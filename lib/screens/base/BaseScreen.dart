@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
+import 'package:olx_mobx/screens/Account/Account.dart';
 import 'package:olx_mobx/screens/Home/HomeScreen.dart';
 import 'package:olx_mobx/screens/create/create_screen.dart';
 import 'package:olx_mobx/stores/page_store.dart';
@@ -37,7 +38,7 @@ class _BaseScreenState extends State<BaseScreen> {
           CreateScreen(),
           Container(color: Colors.yellow),
           Container(color: Colors.purple),
-          Container(color: Colors.brown),
+          AccountScreen(),
         ],
       ),
     );
