@@ -166,4 +166,32 @@ class AnuncioRepository {
       return Future.error("Falha ao salvar os dados");
     }
   }
+
+  Future<List<Anuncio>> getMeusAnuncios(User user) async {
+    /* fazendo referencia para buscar um usuario no banco a partir do id */
+    final currentUser = ParseUser('', '', '')..set(keyUserId, user.id);
+
+    final queryBuilder =
+        QueryBuilder<ParseObject>(ParseObject(keyAnuncioTable));
+
+    queryBuilder.setLimit(100);
+    queryBuilder.orderByDescending(keyAnuncioCreatedAt);
+    /* onde o anunciante é um pointer para o usuario que quer buscar os anuncios */
+    queryBuilder.whereEqualTo(keyAnuncioAnunciante, currentUser.toPointer());
+    queryBuilder.includeObject([keyAnuncioCategory, keyAnuncioAnunciante]);
+
+    final response = await queryBuilder.query();
+
+     if (response.success && response.results != null) {
+      return response.results
+          .map((anuncioObject) => Anuncio.fromParse(anuncioObject))
+          .toList();
+    } else if (response.success && response.results == null) {
+      /* caso a seja nulo vamos retornar uma lista vazia, 
+      pois ele pode procurar um anuncio que não de match com a lista*/
+      return [];
+    } else {
+      return Future.error(ParseErrors.getDescription(response.error.code));
+    }
+  }
 }

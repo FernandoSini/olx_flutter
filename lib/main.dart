@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
-import 'package:olx_mobx/repositories/category_repository.dart';
-import 'package:olx_mobx/repositories/cep_repository.dart';
-import 'package:olx_mobx/repositories/ibge_repository.dart';
 import 'package:olx_mobx/stores/category_store.dart';
 import 'package:olx_mobx/stores/home_store.dart';
 import 'package:olx_mobx/stores/page_store.dart';

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:olx_mobx/stores/meusanuncios_store.dart';
+
+import 'components/ActiveTile.dart';
 
 class MeusAnuncios extends StatefulWidget {
   @override
@@ -8,6 +12,7 @@ class MeusAnuncios extends StatefulWidget {
 class _MeusAnunciosState extends State<MeusAnuncios>
     with SingleTickerProviderStateMixin {
   TabController tabController;
+  final MeusAnunciosStore meusAnuncios = MeusAnunciosStore();
 
   @override
   void initState() {
@@ -23,7 +28,7 @@ class _MeusAnunciosState extends State<MeusAnuncios>
         centerTitle: true,
         bottom: TabBar(
           controller: tabController,
-          indicatorColor: Colors.blueAccent[700],
+          indicatorColor: Colors.white,
           tabs: [
             Tab(
               child: Text("Ativos"),
@@ -40,8 +45,17 @@ class _MeusAnunciosState extends State<MeusAnuncios>
       body: TabBarView(
         controller: tabController,
         children: [
-          Container(
-            color: Colors.red,
+          /* observando a lista de anuncios ativas caso a lista mude ela possa atualizar */
+          Observer(
+            builder: (_) {
+              if (meusAnuncios.activeAds.isEmpty) return Container();
+              return ListView.builder(
+                itemCount: meusAnuncios.activeAds.length,
+                itemBuilder: (_, index) {
+                  return ActiveTile(meusAnuncios.activeAds[index]);
+                },
+              );
+            },
           ),
           Container(
             color: Colors.red,
