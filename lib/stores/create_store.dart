@@ -4,6 +4,7 @@ import 'package:olx_mobx/models/Address.dart';
 import 'package:olx_mobx/models/Anuncio.dart';
 import 'package:olx_mobx/models/Category.dart';
 import 'package:olx_mobx/repositories/anuncio_repository.dart';
+import 'package:olx_mobx/helpers/extensions.dart';
 import 'package:olx_mobx/stores/cep_store.dart';
 import 'package:olx_mobx/stores/user_manager_store.dart';
 part 'create_store.g.dart';
@@ -11,6 +12,23 @@ part 'create_store.g.dart';
 class CreateStore = _CreateStore with _$CreateStore;
 
 abstract class _CreateStore with Store {
+  /* construtor que vai receber o anuncio */
+  _CreateStore(Anuncio anuncio) {
+    title = anuncio.title;
+    description = anuncio.description;
+    imageList = anuncio.images.asObservable();
+    category = anuncio.category;
+    priceText = anuncio.price?.formattedMoney();
+    hidePhone = anuncio.hidePhone;
+    if (anuncio.address != null) {
+      print("printoso pantanoso");
+      cepStore = CepStore(anuncio.address.cep);
+    } else {
+      cepStore = CepStore(null);
+    }
+    
+  }
+
   /* vamos guardar todos as imagens do anuncio na lista */
   ObservableList imageList = ObservableList();
 
@@ -75,7 +93,7 @@ abstract class _CreateStore with Store {
     }
   }
 
-  CepStore cepStore = CepStore();
+  CepStore cepStore;
 
   @computed
   Address get address => cepStore.address;
@@ -98,7 +116,7 @@ abstract class _CreateStore with Store {
   num get price {
     /* tratando um caso o numero tenha virgula, é um bug da biblioteca */
     if (priceText.contains(',')) {
-      return num.tryParse(priceText.replaceAll(RegExp('[\.\,]'), '')) / 100;
+      return num.tryParse(priceText.replaceAll(RegExp('[^0-9]'), '')) / 100;
     } else {
       /* se não vamos retornar só o numero */
       return num.tryParse(priceText);

@@ -1,6 +1,5 @@
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
-import 'package:olx_mobx/screens/filter/components/OrderByField.dart';
 import 'package:olx_mobx/stores/home_store.dart';
 part 'filter_store.g.dart';
 

@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:olx_mobx/components/custom_drawer/custom_drawer.dart';
 import 'package:olx_mobx/components/error_box.dart';
+import 'package:olx_mobx/models/Anuncio.dart';
 import 'package:olx_mobx/stores/create_store.dart';
 import 'package:olx_mobx/stores/page_store.dart';
 
@@ -15,12 +16,20 @@ import 'components/hide_phone_field.dart';
 import 'components/images_field.dart';
 
 class CreateScreen extends StatefulWidget {
+  /* opicional se n receber o anuncio quer dizer que esta criando novo anuncio */
+  CreateScreen({this.anuncio});
+  final Anuncio anuncio;
+
   @override
-  _CreateScreenState createState() => _CreateScreenState();
+  _CreateScreenState createState() => _CreateScreenState(anuncio);
 }
 
 class _CreateScreenState extends State<CreateScreen> {
-  final CreateStore createStore = CreateStore();
+  /* o anuncio sera passado automaticamente pro store, 
+  caso seja opicional o anuncio sera nulo entao temos que passar o novo objeto anuncio */
+  _CreateScreenState(Anuncio anuncio)
+      : createStore = CreateStore(anuncio ?? Anuncio());
+  final CreateStore createStore;
 
   @override
   void initState() {
@@ -89,6 +98,7 @@ class _CreateScreenState extends State<CreateScreen> {
                       Observer(
                         builder: (_) {
                           return TextFormField(
+                            initialValue: createStore.title,
                             onChanged: createStore.setTitle,
                             decoration: InputDecoration(
                               labelText: 'Titulo *',
@@ -102,6 +112,7 @@ class _CreateScreenState extends State<CreateScreen> {
                       Observer(
                         builder: (_) {
                           return TextFormField(
+                            initialValue: createStore.description,
                             onChanged: createStore.setDescription,
                             decoration: InputDecoration(
                                 labelText: 'Descrição *',
@@ -117,6 +128,7 @@ class _CreateScreenState extends State<CreateScreen> {
                       Observer(
                         builder: (_) {
                           return TextFormField(
+                            initialValue: createStore.priceText,
                             onChanged: createStore.setPrice,
                             decoration: InputDecoration(
                               errorText: createStore.priceError,
@@ -137,6 +149,9 @@ class _CreateScreenState extends State<CreateScreen> {
                       /* é so para teste Observer(builder: (_) {
                         return ErrorBox(message: createStore.error);
                       }), */
+                      /* Observer(builder: (_){
+                        return ErrorBox(message: createStore.error,);
+                      },), */
                       Observer(
                         builder: (_) {
                           return SizedBox(

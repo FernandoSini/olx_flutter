@@ -6,7 +6,7 @@ part 'cep_store.g.dart';
 class CepStore = _CepStore with _$CepStore;
 
 abstract class _CepStore with Store {
-  _CepStore() {
+  _CepStore(String initialCep) {
     /* adicionando uma reacao caso o clearcep for vazio ou diferente de 8*/
     autorun((_) {
       if (clearCep.length != 8) {
@@ -16,6 +16,8 @@ abstract class _CepStore with Store {
         _searchCep();
       }
     });
+
+    setCep(initialCep);
   }
 
   @observable

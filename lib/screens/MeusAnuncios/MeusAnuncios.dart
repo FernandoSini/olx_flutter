@@ -3,6 +3,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:olx_mobx/stores/meusanuncios_store.dart';
 
 import 'components/ActiveTile.dart';
+import 'components/PendingTile.dart';
+import 'components/SoldTile.dart';
 
 class MeusAnuncios extends StatefulWidget {
   @override
@@ -57,11 +59,29 @@ class _MeusAnunciosState extends State<MeusAnuncios>
               );
             },
           ),
-          Container(
-            color: Colors.red,
+          /* observando a lista de anuncios pendendtes caso a lista mude ela possa atualizar */
+          Observer(
+            builder: (_) {
+              if (meusAnuncios.pendingAds.isEmpty) return Container();
+              return ListView.builder(
+                itemCount: meusAnuncios.pendingAds.length,
+                itemBuilder: (_, index) {
+                  return PendingTile(meusAnuncios.pendingAds[index]);
+                },
+              );
+            },
           ),
-          Container(
-            color: Colors.red,
+          /* observando a lista de anuncios vendidos caso a lista mude ela possa atualizar */
+          Observer(
+            builder: (_) {
+              if (meusAnuncios.soldAds.isEmpty) return Container();
+              return ListView.builder(
+                itemCount: meusAnuncios.soldAds.length,
+                itemBuilder: (_, index) {
+                  return SoldTile(meusAnuncios.soldAds[index]);
+                },
+              );
+            },
           ),
         ],
       ),

@@ -40,13 +40,13 @@ class Anuncio {
   Anuncio();
 
   String id;
-  List images;
+  List images = [];
   String title;
   String description;
   Category category;
   Address address;
   num price;
-  bool hidePhone;
+  bool hidePhone = false;
   AnuncioStatus status = AnuncioStatus.PENDING;
   DateTime createdDate;
 

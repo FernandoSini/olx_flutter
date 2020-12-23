@@ -84,7 +84,7 @@ class AccountScreen extends StatelessWidget {
               ),
               ListTile(
                 title: Text(
-                  "Meus Anúncios",
+                  "Favoritos",
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     color: Colors.blueAccent[700],

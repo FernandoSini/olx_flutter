@@ -61,8 +61,9 @@ class AnuncioScreen extends StatelessWidget {
                       color: Colors.grey[500],
                     ),
                     AnunciantePanel(anuncio),
-                    const SizedBox(
-                      height: 120,
+                    SizedBox(
+                      height:
+                          anuncio.status == AnuncioStatus.PENDING ? 16 : 120,
                     ),
                   ],
                 ),
