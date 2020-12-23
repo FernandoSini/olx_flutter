@@ -7,6 +7,11 @@ import 'components/PendingTile.dart';
 import 'components/SoldTile.dart';
 
 class MeusAnuncios extends StatefulWidget {
+  /* definindo a pagina inicial */
+  MeusAnuncios({this.initialPage = 0});
+
+  final int initialPage;
+
   @override
   _MeusAnunciosState createState() => _MeusAnunciosState();
 }
@@ -18,7 +23,8 @@ class _MeusAnunciosState extends State<MeusAnuncios>
 
   @override
   void initState() {
-    tabController = TabController(length: 3, vsync: this);
+    tabController =
+        TabController(length: 3, vsync: this, initialIndex: widget.initialPage);
     super.initState();
   }
 

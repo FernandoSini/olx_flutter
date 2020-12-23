@@ -52,7 +52,8 @@ class _CreateScreenState extends State<CreateScreen> {
         /* ao criar um novo anuncio vamos tambem ir pra tela de anuncio pendente de aprovacao */
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (_) => MeusAnuncios(),
+            builder: (_) => MeusAnuncios(initialPage: 1),
+            /* definindo a pagina inicial como a pagina de anuncios pendentes */
           ),
         );
       }

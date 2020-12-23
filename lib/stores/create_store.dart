@@ -13,7 +13,7 @@ class CreateStore = _CreateStore with _$CreateStore;
 
 abstract class _CreateStore with Store {
   /* construtor que vai receber o anuncio */
-  _CreateStore(Anuncio anuncio) {
+  _CreateStore(this.anuncio) {
     title = anuncio.title ?? '';
     description = anuncio.description ?? '';
     imageList = anuncio.images.asObservable();
@@ -27,6 +27,7 @@ abstract class _CreateStore with Store {
       cepStore = CepStore(null);
     }
   }
+  final Anuncio anuncio;
 
   /* vamos guardar todos as imagens do anuncio na lista */
   ObservableList imageList = ObservableList();
@@ -170,8 +171,7 @@ abstract class _CreateStore with Store {
 
   @action
   Future<void> _send() async {
-    final anuncio = Anuncio();
-
+/* pra editar/ salvar/criar um anuncio vc tem que usar o mesmo objeto anuncio(com o mesmo id) definido lá em cima, pelo mesmo id  */
     anuncio.title = title;
     anuncio.description = description;
     anuncio.category = category;
