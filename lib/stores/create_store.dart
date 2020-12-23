@@ -14,11 +14,11 @@ class CreateStore = _CreateStore with _$CreateStore;
 abstract class _CreateStore with Store {
   /* construtor que vai receber o anuncio */
   _CreateStore(Anuncio anuncio) {
-    title = anuncio.title;
-    description = anuncio.description;
+    title = anuncio.title ?? '';
+    description = anuncio.description ?? '';
     imageList = anuncio.images.asObservable();
     category = anuncio.category;
-    priceText = anuncio.price?.formattedMoney();
+    priceText = anuncio.price?.toStringAsFixed(2) ?? '';
     hidePhone = anuncio.hidePhone;
     if (anuncio.address != null) {
       print("printoso pantanoso");
@@ -26,7 +26,6 @@ abstract class _CreateStore with Store {
     } else {
       cepStore = CepStore(null);
     }
-    
   }
 
   /* vamos guardar todos as imagens do anuncio na lista */

@@ -7,6 +7,7 @@ import 'package:mobx/mobx.dart';
 import 'package:olx_mobx/components/custom_drawer/custom_drawer.dart';
 import 'package:olx_mobx/components/error_box.dart';
 import 'package:olx_mobx/models/Anuncio.dart';
+import 'package:olx_mobx/screens/MeusAnuncios/MeusAnuncios.dart';
 import 'package:olx_mobx/stores/create_store.dart';
 import 'package:olx_mobx/stores/page_store.dart';
 
@@ -28,18 +29,33 @@ class _CreateScreenState extends State<CreateScreen> {
   /* o anuncio sera passado automaticamente pro store, 
   caso seja opicional o anuncio sera nulo entao temos que passar o novo objeto anuncio */
   _CreateScreenState(Anuncio anuncio)
-      : createStore = CreateStore(anuncio ?? Anuncio());
+      /*  */
+      : editing = anuncio != null,
+        createStore = CreateStore(anuncio ?? Anuncio());
   final CreateStore createStore;
+  bool editing;
 
   @override
   void initState() {
     super.initState();
     when((_) => createStore.savedAnuncio /* != null */, () {
-      //quando o saved store for true, o a pagina será 0
-      /* observar a reacao do saved anuncio e realizar uma acao quando tiver 
+      /* Caso o usúario esteja editando anuncio entao ele vai para a pagina 1 */
+      if (editing) {
+        /* indicando que o anuncio foi salvo com sucesso */
+        Navigator.of(context).pop(true);
+      } else {
+        //quando o saved store for true, o a pagina será 0
+        /* observar a reacao do saved anuncio e realizar uma acao quando tiver 
       uma modificacao ,
        o when é trigado uma vez e n precisa dar dispose*/
-      GetIt.I<PageStore>().setPage(0);
+        GetIt.I<PageStore>().setPage(0);
+        /* ao criar um novo anuncio vamos tambem ir pra tela de anuncio pendente de aprovacao */
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => MeusAnuncios(),
+          ),
+        );
+      }
     });
   }
 
@@ -52,9 +68,9 @@ class _CreateScreenState extends State<CreateScreen> {
     );
     final contentPadding = const EdgeInsets.fromLTRB(16, 10, 12, 10);
     return Scaffold(
-      drawer: CustomDrawer(),
+      drawer: editing ? null : CustomDrawer(),
       appBar: AppBar(
-        title: Text("Criar Anuncio"),
+        title: Text(editing ? "Editar Anúncio" : "Criar Anúncio"),
         centerTitle: true,
       ),
       body: Container(
