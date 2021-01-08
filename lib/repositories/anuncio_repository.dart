@@ -100,6 +100,10 @@ class AnuncioRepository {
 
       /* criando o objeto anuncio presente na tabela Anuncio */
       final anuncioObject = ParseObject(keyAnuncioTable);
+
+      //caso esteja(salvando um anuncio existente) editando um anuncio,defina o object id como o id do anuncio editado;
+      if(anuncio.id != null) anuncioObject.objectId = anuncio.id;
+
       /* alterando a permissao de edicao do objeto */
       final parseAcl = ParseACL(owner: parseUser);
       /* permitindo que qualquer um leia os dados do anuncio */
