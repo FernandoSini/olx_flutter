@@ -54,4 +54,18 @@ abstract class _MeusAnunciosStoreBase with Store {
 
   //vai atualizar os dados, quando edita um anuncio
   void refresh() => _getMeusAnuncios();
+  @action
+
+  Future<void> soldAd(Anuncio anuncio) async{
+    loading = true;
+    await AnuncioRepository().sold(anuncio);
+    refresh();
+  }
+  @action
+  Future<void> deleteAnuncio(Anuncio anuncio) async{
+    loading = true;
+    await AnuncioRepository().delete(anuncio);
+    refresh();
+  }
+
 }

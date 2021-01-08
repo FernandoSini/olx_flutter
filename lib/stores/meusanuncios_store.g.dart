@@ -70,6 +70,21 @@ mixin _$MeusAnunciosStore on _MeusAnunciosStoreBase, Store {
     return _$_getMeusAnunciosAsyncAction.run(() => super._getMeusAnuncios());
   }
 
+  final _$soldAdAsyncAction = AsyncAction('_MeusAnunciosStoreBase.soldAd');
+
+  @override
+  Future<void> soldAd(Anuncio anuncio) {
+    return _$soldAdAsyncAction.run(() => super.soldAd(anuncio));
+  }
+
+  final _$deleteAnuncioAsyncAction =
+      AsyncAction('_MeusAnunciosStoreBase.deleteAnuncio');
+
+  @override
+  Future<void> deleteAnuncio(Anuncio anuncio) {
+    return _$deleteAnuncioAsyncAction.run(() => super.deleteAnuncio(anuncio));
+  }
+
   @override
   String toString() {
     return '''

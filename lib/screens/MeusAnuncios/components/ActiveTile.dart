@@ -11,7 +11,7 @@ class ActiveTile extends StatelessWidget {
   ActiveTile(this.anuncio, this.meusAnunciosStore);
 
   final Anuncio anuncio;
-  final MeusAnunciosStore meusAnunciosStore ;
+  final MeusAnunciosStore meusAnunciosStore;
 
   final List<MenuChoice> choices = [
     MenuChoice(index: 0, title: "Editar", iconData: Icons.edit),
@@ -88,8 +88,10 @@ class ActiveTile extends StatelessWidget {
                           editarAnuncio(context);
                           break;
                         case 1:
+                          soldAnuncio(context);
                           break;
                         case 2:
+                          deleteAnuncio(context);
                           break;
                       }
                     },
@@ -148,6 +150,51 @@ class ActiveTile extends StatelessWidget {
       //irá atualizar a tela caso de certo ao editar anuncio
       meusAnunciosStore.refresh();
     }
+  }
+
+  Future<void> soldAnuncio(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+              title: Text("Anuncio vendido"),
+              content: Text("Você deseja confirmar que o ${anuncio.title} foi vendido?"),
+              actions: [
+                FlatButton(
+                  onPressed: Navigator.of(context).pop,
+                  child: Text("Não"),
+                ),
+                FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    meusAnunciosStore.soldAd(anuncio);
+                  },
+                  child: Text("Sim"),
+                  textColor: Colors.orange,
+                ),
+              ],
+            ));
+  }
+  Future<void> deleteAnuncio(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+              title: Text("Anuncio vendido"),
+              content: Text("Você deseja excluir ${anuncio.title} ?"),
+              actions: [
+                FlatButton(
+                  onPressed: Navigator.of(context).pop,
+                  child: Text("Não"),
+                ),
+                FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    meusAnunciosStore.deleteAnuncio(anuncio);
+                  },
+                  child: Text("Sim"),
+                  textColor: Colors.orange,
+                ),
+              ],
+            ));
   }
 }
 

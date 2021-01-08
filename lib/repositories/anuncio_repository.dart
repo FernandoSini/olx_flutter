@@ -198,4 +198,29 @@ class AnuncioRepository {
       return Future.error(ParseErrors.getDescription(response.error.code));
     }
   }
+
+  Future<void> sold(Anuncio anuncio)async{
+    //pegando a referencia do objeto que será marcado como vendido
+    final parseObject = ParseObject(keyAnuncioTable)..set(keyAnuncioid, anuncio.id);
+    parseObject.set(keyAnuncioStatus, AnuncioStatus.SOLD.index);
+
+    final response = await parseObject.save();
+    if(!response.success){
+      return Future.error(ParseErrors.getDescription(response.error.code));
+    }
+
+  }
+
+  //VAMOS DELETAR NO CASO SUMIR PRA TODO MUNDO E SÓ NOS ADMIM PODEMOS VER
+  Future<void> delete(Anuncio anuncio) async {
+    //pegando a referencia do objeto que será marcado como vendido
+    final parseObject = ParseObject(keyAnuncioTable)..set(keyAnuncioid, anuncio.id);
+    parseObject.set(keyAnuncioStatus, AnuncioStatus.DELETED.index);
+
+    final response = await parseObject.save();
+    if(!response.success){
+      return Future.error(ParseErrors.getDescription(response.error.code));
+    }
+
+  }
 }

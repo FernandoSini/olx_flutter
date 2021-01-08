@@ -2,10 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:olx_mobx/models/Anuncio.dart';
 import 'package:olx_mobx/helpers/extensions.dart';
+import 'package:olx_mobx/stores/meusanuncios_store.dart';
 
 class SoldTile extends StatelessWidget {
-  SoldTile(this.anuncio);
+  SoldTile(this.anuncio, this.meusAnuncios);
   final Anuncio anuncio;
+  final MeusAnunciosStore meusAnuncios;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +62,9 @@ class SoldTile extends StatelessWidget {
                     color: Colors.blueAccent[700],
                     size: 20,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    meusAnuncios.deleteAnuncio(anuncio);
+                  },
                 ),
               ],
             ),

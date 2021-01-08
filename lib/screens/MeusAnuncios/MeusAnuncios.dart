@@ -94,7 +94,7 @@ class _MeusAnunciosState extends State<MeusAnuncios>
                   return ListView.builder(
                     itemCount: meusAnuncios.soldAds.length,
                     itemBuilder: (_, index) {
-                      return SoldTile(meusAnuncios.soldAds[index]);
+                      return SoldTile(meusAnuncios.soldAds[index], meusAnuncios);
                     },
                   );
                 },
