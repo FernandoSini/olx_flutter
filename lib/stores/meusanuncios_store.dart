@@ -3,6 +3,7 @@ import 'package:mobx/mobx.dart';
 import 'package:olx_mobx/models/Anuncio.dart';
 import 'package:olx_mobx/repositories/anuncio_repository.dart';
 import 'package:olx_mobx/stores/user_manager_store.dart';
+
 part 'meusanuncios_store.g.dart';
 
 class MeusAnunciosStore = _MeusAnunciosStoreBase with _$MeusAnunciosStore;
@@ -22,9 +23,11 @@ abstract class _MeusAnunciosStoreBase with Store {
   List<Anuncio> get activeAds => allMyAds
       .where((anuncioObject) => anuncioObject.status == AnuncioStatus.ACTIVE)
       .toList();
+
   List<Anuncio> get pendingAds => allMyAds
       .where((anuncioObject) => anuncioObject.status == AnuncioStatus.PENDING)
       .toList();
+
   List<Anuncio> get soldAds => allMyAds
       .where((anuncioObject) => anuncioObject.status == AnuncioStatus.SOLD)
       .toList();
@@ -33,12 +36,22 @@ abstract class _MeusAnunciosStoreBase with Store {
   String error = "";
 
   @action
-
   /* Vai buscar no repositorio as listas de anuncios do meu usuario */
   Future<void> _getMeusAnuncios() async {
     final user = GetIt.I<UserManagerStore>().user;
+
     try {
+      loading = true;
       allMyAds = await AnuncioRepository().getMeusAnuncios(user);
-    } catch (e) {}
+      loading = false;
+    } catch (e) {
+
+    }
   }
+
+  @observable
+  bool loading = false;
+
+  //vai atualizar os dados, quando edita um anuncio
+  void refresh() => _getMeusAnuncios();
 }

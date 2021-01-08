@@ -47,6 +47,21 @@ mixin _$MeusAnunciosStore on _MeusAnunciosStoreBase, Store {
     });
   }
 
+  final _$loadingAtom = Atom(name: '_MeusAnunciosStoreBase.loading');
+
+  @override
+  bool get loading {
+    _$loadingAtom.reportRead();
+    return super.loading;
+  }
+
+  @override
+  set loading(bool value) {
+    _$loadingAtom.reportWrite(value, super.loading, () {
+      super.loading = value;
+    });
+  }
+
   final _$_getMeusAnunciosAsyncAction =
       AsyncAction('_MeusAnunciosStoreBase._getMeusAnuncios');
 
@@ -60,6 +75,7 @@ mixin _$MeusAnunciosStore on _MeusAnunciosStoreBase, Store {
     return '''
 allMyAds: ${allMyAds},
 error: ${error},
+loading: ${loading},
 activeAds: ${activeAds}
     ''';
   }

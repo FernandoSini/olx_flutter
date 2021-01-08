@@ -50,46 +50,58 @@ class _MeusAnunciosState extends State<MeusAnuncios>
           ],
         ),
       ),
-      body: TabBarView(
-        controller: tabController,
-        children: [
-          /* observando a lista de anuncios ativas caso a lista mude ela possa atualizar */
-          Observer(
-            builder: (_) {
-              if (meusAnuncios.activeAds.isEmpty) return Container();
-              return ListView.builder(
-                itemCount: meusAnuncios.activeAds.length,
-                itemBuilder: (_, index) {
-                  return ActiveTile(meusAnuncios.activeAds[index]);
+      body: Observer(
+        builder: (_) {
+          if (meusAnuncios.loading) {
+            return Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation(Colors.white),
+              ),
+            );
+          }
+          return TabBarView(
+            controller: tabController,
+            children: [
+              /* observando a lista de anuncios ativas caso a lista mude ela possa atualizar */
+              Observer(
+                builder: (_) {
+                  if (meusAnuncios.activeAds.isEmpty) return Container();
+                  return ListView.builder(
+                    itemCount: meusAnuncios.activeAds.length,
+                    itemBuilder: (_, index) {
+                      return ActiveTile(
+                          meusAnuncios.activeAds[index], meusAnuncios);
+                    },
+                  );
                 },
-              );
-            },
-          ),
-          /* observando a lista de anuncios pendendtes caso a lista mude ela possa atualizar */
-          Observer(
-            builder: (_) {
-              if (meusAnuncios.pendingAds.isEmpty) return Container();
-              return ListView.builder(
-                itemCount: meusAnuncios.pendingAds.length,
-                itemBuilder: (_, index) {
-                  return PendingTile(meusAnuncios.pendingAds[index]);
+              ),
+              /* observando a lista de anuncios pendendtes caso a lista mude ela possa atualizar */
+              Observer(
+                builder: (_) {
+                  if (meusAnuncios.pendingAds.isEmpty) return Container();
+                  return ListView.builder(
+                    itemCount: meusAnuncios.pendingAds.length,
+                    itemBuilder: (_, index) {
+                      return PendingTile(meusAnuncios.pendingAds[index]);
+                    },
+                  );
                 },
-              );
-            },
-          ),
-          /* observando a lista de anuncios vendidos caso a lista mude ela possa atualizar */
-          Observer(
-            builder: (_) {
-              if (meusAnuncios.soldAds.isEmpty) return Container();
-              return ListView.builder(
-                itemCount: meusAnuncios.soldAds.length,
-                itemBuilder: (_, index) {
-                  return SoldTile(meusAnuncios.soldAds[index]);
+              ),
+              /* observando a lista de anuncios vendidos caso a lista mude ela possa atualizar */
+              Observer(
+                builder: (_) {
+                  if (meusAnuncios.soldAds.isEmpty) return Container();
+                  return ListView.builder(
+                    itemCount: meusAnuncios.soldAds.length,
+                    itemBuilder: (_, index) {
+                      return SoldTile(meusAnuncios.soldAds[index]);
+                    },
+                  );
                 },
-              );
-            },
-          ),
-        ],
+              ),
+            ],
+          );
+        },
       ),
     );
   }

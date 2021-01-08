@@ -3,17 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:olx_mobx/models/Anuncio.dart';
 import 'package:olx_mobx/helpers/extensions.dart';
 import 'package:olx_mobx/screens/Anuncio/AnuncioScreen.dart';
+import 'package:olx_mobx/screens/MeusAnuncios/MeusAnuncios.dart';
 import 'package:olx_mobx/screens/create/create_screen.dart';
+import 'package:olx_mobx/stores/meusanuncios_store.dart';
 
 class ActiveTile extends StatelessWidget {
-  ActiveTile(this.anuncio);
+  ActiveTile(this.anuncio, this.meusAnunciosStore);
+
   final Anuncio anuncio;
+  final MeusAnunciosStore meusAnunciosStore ;
 
   final List<MenuChoice> choices = [
     MenuChoice(index: 0, title: "Editar", iconData: Icons.edit),
     MenuChoice(index: 1, title: "Vendido", iconData: Icons.thumb_up),
     MenuChoice(index: 2, title: "Excluir", iconData: Icons.delete)
   ];
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -131,19 +136,24 @@ class ActiveTile extends StatelessWidget {
     );
   }
 
-  Future<void> editarAnuncio(BuildContext context) {
-   return Navigator.of(context).push(
+  Future<void> editarAnuncio(BuildContext context) async {
+    final success = await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => CreateScreen(
           anuncio: anuncio,
         ),
       ),
     );
+    if (success != null && success) {
+      //irá atualizar a tela caso de certo ao editar anuncio
+      meusAnunciosStore.refresh();
+    }
   }
 }
 
 class MenuChoice {
   MenuChoice({this.index, this.title, this.iconData});
+
   final int index;
   final String title;
   final IconData iconData;
