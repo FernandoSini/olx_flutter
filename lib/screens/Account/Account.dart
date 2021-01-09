@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:olx_mobx/components/custom_drawer/custom_drawer.dart';
+import 'package:olx_mobx/screens/EditAccount/EditAccountScreen.dart';
 import 'package:olx_mobx/screens/MeusAnuncios/MeusAnuncios.dart';
 import 'package:olx_mobx/stores/user_manager_store.dart';
 
@@ -58,7 +59,13 @@ class AccountScreen extends StatelessWidget {
                           "Editar",
                         ),
                         textColor: Colors.blueAccent[700],
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => EditAccountScreen(),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ],

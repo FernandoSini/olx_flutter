@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:olx_mobx/components/Empty_card.dart';
 import 'package:olx_mobx/stores/meusanuncios_store.dart';
 
 import 'components/ActiveTile.dart';
@@ -65,7 +66,7 @@ class _MeusAnunciosState extends State<MeusAnuncios>
               /* observando a lista de anuncios ativas caso a lista mude ela possa atualizar */
               Observer(
                 builder: (_) {
-                  if (meusAnuncios.activeAds.isEmpty) return Container();
+                  if (meusAnuncios.activeAds.isEmpty) return EmptyCard("Você não possui anúncios ativos");
                   return ListView.builder(
                     itemCount: meusAnuncios.activeAds.length,
                     itemBuilder: (_, index) {
@@ -78,7 +79,7 @@ class _MeusAnunciosState extends State<MeusAnuncios>
               /* observando a lista de anuncios pendendtes caso a lista mude ela possa atualizar */
               Observer(
                 builder: (_) {
-                  if (meusAnuncios.pendingAds.isEmpty) return Container();
+                  if (meusAnuncios.pendingAds.isEmpty) return EmptyCard("Você não possui anúncios pendentes");
                   return ListView.builder(
                     itemCount: meusAnuncios.pendingAds.length,
                     itemBuilder: (_, index) {
@@ -90,7 +91,7 @@ class _MeusAnunciosState extends State<MeusAnuncios>
               /* observando a lista de anuncios vendidos caso a lista mude ela possa atualizar */
               Observer(
                 builder: (_) {
-                  if (meusAnuncios.soldAds.isEmpty) return Container();
+                  if (meusAnuncios.soldAds.isEmpty) return EmptyCard("Você não possui anúncios vendidos");
                   return ListView.builder(
                     itemCount: meusAnuncios.soldAds.length,
                     itemBuilder: (_, index) {
