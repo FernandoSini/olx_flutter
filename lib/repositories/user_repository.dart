@@ -64,4 +64,37 @@ class UserRepository {
       return Future.error(ParseErrors.getDescription(response.error.code));
     }
   }
+
+  Future<void> saveUpdatedUser(User user) async {
+    final ParseUser parseUser = await ParseUser.currentUser();
+    // se o parse user for diferente de nullo vamos atualizar o usuario com os dados atualizados
+    if (parseUser != null) {
+      parseUser.set<String>(keyUserName, user.name);
+      parseUser.set<String>(keyUserPhone, user.phone);
+      parseUser.set<int>(keyUserType, user.type.index);
+
+      if (user.password != null) {
+        parseUser.password = user.password;
+      }
+      final response = await parseUser.save();
+
+      if (!response.success) {
+        return Future.error(ParseErrors.getDescription(response.error.code));
+      }
+
+      //evitando que ao alterar a senha o parse invalide a sessão
+      if(user.password != null){
+        //garantindo que a senha é nova e que ele nao está logado(foi deslogado)
+        // e ira fazer um novo login com os dados atualizados
+        await parseUser.logout();
+        final loginResponse = await ParseUser(user.email, user.password, user.email).login();
+
+        if(!loginResponse.success){
+          return Future.error(ParseErrors.getDescription(loginResponse.error.code));
+        }
+
+      }
+
+    }
+  }
 }
