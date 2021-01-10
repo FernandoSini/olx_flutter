@@ -2,7 +2,9 @@ import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 import 'package:olx_mobx/stores/EditAccountStore.dart';
+import 'package:olx_mobx/stores/page_store.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 class EditAccountScreen extends StatelessWidget {
@@ -159,7 +161,12 @@ class EditAccountScreen extends StatelessWidget {
                   SizedBox(
                     height: 40,
                     child: RaisedButton(
-                      onPressed: () {},
+                      onPressed: (){
+                        //deslogando um usuario
+                        editAccountStore.logout();
+                        GetIt.I<PageStore>().setPage(0);
+                        Navigator.of(context).pop();
+                      },
                       color: Colors.red,
                       textColor: Colors.white,
                       elevation: 0,

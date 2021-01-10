@@ -25,4 +25,9 @@ abstract class _UserManagerStore with Store {
     /* if has user logged in, we ill set user */
     setUser(user);
   }
+
+  Future<void> logout() async {
+    await UserRepository().logout();
+    setUser(null);
+  }
 }

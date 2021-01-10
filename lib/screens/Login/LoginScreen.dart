@@ -1,11 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
+import 'package:mobx/mobx.dart';
 import 'package:olx_mobx/components/error_box.dart';
 import 'package:olx_mobx/screens/SignUp/SignUpScreen.dart';
 import 'package:olx_mobx/stores/login_store.dart';
+import 'package:olx_mobx/stores/user_manager_store.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final LoginStore loginStore = LoginStore();
+  final UserManagerStore userManagerStore = GetIt.I<UserManagerStore>();
+
+  @override
+  void initState() {
+    super.initState();
+    when((_)=> userManagerStore.user != null, (){
+      Navigator.of(context).pop();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

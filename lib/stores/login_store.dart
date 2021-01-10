@@ -84,7 +84,7 @@ abstract class _LoginStore with Store {
   @action
   Future<void> _login() async {
     loading = true;
-
+    error = null;
     try {
       var user = await UserRepository().loginWithEmail(email, pass);
       /* Pegando a instancia do user via get It, salvando os dados do usuario dentro do manager store */

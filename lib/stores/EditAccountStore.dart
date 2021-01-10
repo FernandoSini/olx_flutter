@@ -114,4 +114,5 @@ abstract class _EditAccountStoreBase with Store {
     }
     loading = false;
   }
+  void logout()=> userManagerStore.logout();
 }
