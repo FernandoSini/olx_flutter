@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:olx_mobx/stores/category_store.dart';
+import 'package:olx_mobx/stores/favorite_store.dart';
 import 'package:olx_mobx/stores/home_store.dart';
 import 'package:olx_mobx/stores/page_store.dart';
 import 'package:olx_mobx/stores/user_manager_store.dart';
@@ -34,6 +35,7 @@ void setupLocators() {
   /* ou seja os dados do usuário podem ser acessados de qualquer parte do app*/
   GetIt.I.registerSingleton(UserManagerStore());
   GetIt.I.registerSingleton(CategoryStore());
+  GetIt.I.registerSingleton(FavoriteStore());
 }
 
 class MyApp extends StatelessWidget {

@@ -19,8 +19,10 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    when((_)=> userManagerStore.user != null, (){
-      Navigator.of(context).pop();
+    when((_) => userManagerStore.user != null, () {
+      //pop true vai indicar que o login foi feito com sucesso
+      // caso o user nao esteja logado(acessando o login pela pagina que n pode)
+      Navigator.of(context).pop(true);
     });
   }
 

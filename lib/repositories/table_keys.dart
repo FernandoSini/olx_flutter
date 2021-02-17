@@ -26,3 +26,8 @@ const String keyAnuncioCategory = "category";
 const String keyAnuncioAnunciante = "anunciante";
 const String keyAnuncioCreatedAt = "createdAt";
 const String keyAnuncioViews = "views";
+
+const String keyFavoritesTable = "Favorites";
+const String keyFavoritesId = "objectId";
+const String keyFavoritesAnuncio = "anuncio";
+const String keyFavoritesOwner = "owner";
