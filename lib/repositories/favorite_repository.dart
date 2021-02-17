@@ -5,13 +5,16 @@ import 'package:olx_mobx/repositories/table_keys.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 class FavoriteRepository {
-  Future<List<Anuncio>> getAnuncios(User user) async {
+  Future<List<Anuncio>> getFavoriteAnuncios(User user) async {
     //buscando todos os favoritos desse usuário na tabela de favoritos
 
     final queryBuilder =
         QueryBuilder<ParseObject>(ParseObject(keyFavoritesTable));
     //fazendo a query dentro da tabela de favoritos e trazendo todos os favoritos desse usuario
     queryBuilder.whereEqualTo(keyFavoritesOwner, user.id);
+    //vai no parse server e pegar cada coluna dentro do anuncio e dps vai entrar em owner e pegar os dados do owner
+    //acessando um ponteiro de um ponteiro
+    queryBuilder.includeObject([keyFavoritesAnuncio, 'anuncio.anunciante']);
 
     final response = await queryBuilder.query();
     if (response.success && response.results != null) {

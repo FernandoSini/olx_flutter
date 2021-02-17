@@ -30,4 +30,4 @@ const String keyAnuncioViews = "views";
 const String keyFavoritesTable = "Favorites";
 const String keyFavoritesId = "objectId";
 const String keyFavoritesAnuncio = "anuncio";
-const String keyFavoritesOwner = "owner";
+const String keyFavoritesOwner = "anunciante";
