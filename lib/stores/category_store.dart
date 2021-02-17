@@ -1,16 +1,24 @@
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:olx_mobx/models/Category.dart';
 import 'package:olx_mobx/repositories/category_repository.dart';
+
+import 'connectivity_store.dart';
 part 'category_store.g.dart';
 
 class CategoryStore = _CategoryStore with _$CategoryStore;
 
 abstract class _CategoryStore with Store {
+  //fazendo com que a tela home seja carregada quando tiver reconexão
+  final ConnectivityStore connectivityStore = GetIt.I<ConnectivityStore>();
   /* Aqui no category store será armazenado as categories para que quando
    o app seja reiniciado os dados atualizados sejem recuperados */
-
   _CategoryStore() {
-    _loadCategories();
+    autorun((_) {
+      if (connectivityStore.connected && categoryList.isEmpty) {
+        _loadCategories();
+      }
+    });
   }
 
   ObservableList<Category> categoryList = ObservableList<Category>();

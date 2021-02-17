@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:olx_mobx/components/custom_drawer/custom_drawer.dart';
 import 'package:olx_mobx/screens/EditAccount/EditAccountScreen.dart';
 import 'package:olx_mobx/screens/MeusAnuncios/MeusAnuncios.dart';
+import 'package:olx_mobx/screens/favorites/Favorites_screen.dart';
 import 'package:olx_mobx/stores/user_manager_store.dart';
 
 class AccountScreen extends StatelessWidget {
@@ -36,7 +37,7 @@ class AccountScreen extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Observer(
-                            builder: (_){
+                            builder: (_) {
                               return Text(
                                 GetIt.I<UserManagerStore>().user.name,
                                 style: TextStyle(
@@ -103,7 +104,15 @@ class AccountScreen extends StatelessWidget {
                   ),
                 ),
                 trailing: Icon(Icons.keyboard_arrow_right),
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => FavoriteScreen(
+                        hideDrawer: true,
+                      ),
+                    ),
+                  );
+                },
               )
             ],
           ),

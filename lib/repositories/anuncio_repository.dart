@@ -11,82 +11,90 @@ import 'package:path/path.dart' as path;
 class AnuncioRepository {
   Future<List<Anuncio>> getHomeAnuncioList(
       {FilterStore filter, String search, Category category, int page}) async {
-    final queryBuilder =
-        QueryBuilder<ParseObject>(ParseObject(keyAnuncioTable));
-    /* trazendo os anuncios ativos */
-    queryBuilder.whereEqualTo(keyAnuncioStatus, AnuncioStatus.ACTIVE.index);
+    //tratando o erro da conexão
+    try {
+      final queryBuilder =
+          QueryBuilder<ParseObject>(ParseObject(keyAnuncioTable));
+      /* trazendo os anuncios ativos */
+      queryBuilder.whereEqualTo(keyAnuncioStatus, AnuncioStatus.ACTIVE.index);
 
-    /* exibindo um limite de quantidade anuncios */
-    queryBuilder.setLimit(10);
-    /* pegando as paginas e aplicando na query, 
-    pulando uma quantidade de itens que é o numero da pagina * a quantidade de itens */
-    queryBuilder.setAmountToSkip(page * 10);
+      /* exibindo um limite de quantidade anuncios */
+      queryBuilder.setLimit(10);
+      /* pegando as paginas e aplicando na query, 
+      pulando uma quantidade de itens que é o numero da pagina * a quantidade de itens */
+      queryBuilder.setAmountToSkip(page * 10);
 
-    /* devemos incluir os objetos que queremos/ de nosso interesse */
-    queryBuilder.includeObject([keyAnuncioAnunciante, keyAnuncioCategory]);
+      /* devemos incluir os objetos que queremos/ de nosso interesse */
+      queryBuilder.includeObject([keyAnuncioAnunciante, keyAnuncioCategory]);
 
-    /* verificando se o search não é nulo ou vazio */
-    if (search != null && search.trim().isNotEmpty) {
-      queryBuilder.whereContains(keyAnuncioTitle, search, caseSensitive: false);
-    }
-    /* filtrando por categoria, onde o id da categoria seja o igual a categoria da busca */
-    if (category != null && category.id != '*') {
-      queryBuilder.whereEqualTo(
-        keyAnuncioCategory,
-        (ParseObject(keyCategoryTable)..set(keyCategoryId, category.id))
-            .toPointer(),
-      );
-    }
-    /* ordenando a partir dos dados do filtro */
-    switch (filter.orderBy) {
-      case OrderBy.PRICE:
-        /* ordenando pelo preco em ordem crescente */
-        queryBuilder.orderByAscending(keyAnuncioPrice);
-        break;
-      case OrderBy.DATE:
-      /* ordenando por data */
-      default:
-        queryBuilder.orderByDescending(keyAnuncioCreatedAt);
-        break;
-    }
-    /* filtro pelo preco */
-    if (filter.minPrice != null && filter.minPrice > 0) {
-      queryBuilder.whereGreaterThanOrEqualsTo(keyAnuncioPrice, filter.minPrice);
-    }
-    if (filter.maxPrice != null && filter.maxPrice > 0) {
-      queryBuilder.whereLessThanOrEqualTo(keyAnuncioPrice, filter.maxPrice);
-    }
-    /* GARANTIR SE UM DOS DOIS ESTÁ SELECIONADO NO MINIMO, E NO MAXIMO OS 2 ESTAO SELECIONADOS */
-    if (filter.vendorType != null &&
-        filter.vendorType > 0 &&
-        filter.vendorType < VENDOR_TYPE_PROFESSIONAL | VENDOR_TYPE_PARTICULAR) {
-      /* TEMOS QUE FAZER UMA SUBQUERY DENTRO DOS USUARIOS 
-      PARA BUSCAR OS USUARIOS(QUE SAO PROFISSIONAIS OU PARITCULARS)
-      PARA FAZER UM MATCH ENTRE VENDEDOR E O COMPRADOR, 
-      OU SEJA TEMOS QUE FAZER UMA QUERY PARA ACESSAR O PONTEIRO PRA VERIFICAR O TIPO DE USUARIO*/
-
-      final userQuery = QueryBuilder<ParseUser>(ParseUser.forQuery());
-      if (filter.vendorType == VENDOR_TYPE_PARTICULAR) {
-        /* so mostre vendedor do tipo particular */
-        userQuery.whereEqualTo(keyUserType, UserType.PARTICULAR.index);
+      /* verificando se o search não é nulo ou vazio */
+      if (search != null && search.trim().isNotEmpty) {
+        queryBuilder.whereContains(keyAnuncioTitle, search,
+            caseSensitive: false);
       }
-      if (filter.vendorType == VENDOR_TYPE_PROFESSIONAL) {
-        userQuery.whereEqualTo(keyUserType, UserType.PROFESSIONAL.index);
+      /* filtrando por categoria, onde o id da categoria seja o igual a categoria da busca */
+      if (category != null && category.id != '*') {
+        queryBuilder.whereEqualTo(
+          keyAnuncioCategory,
+          (ParseObject(keyCategoryTable)..set(keyCategoryId, category.id))
+              .toPointer(),
+        );
       }
-      queryBuilder.whereMatchesQuery(keyAnuncioAnunciante, userQuery);
-    }
+      /* ordenando a partir dos dados do filtro */
+      switch (filter.orderBy) {
+        case OrderBy.PRICE:
+          /* ordenando pelo preco em ordem crescente */
+          queryBuilder.orderByAscending(keyAnuncioPrice);
+          break;
+        case OrderBy.DATE:
+        /* ordenando por data */
+        default:
+          queryBuilder.orderByDescending(keyAnuncioCreatedAt);
+          break;
+      }
+      /* filtro pelo preco */
+      if (filter.minPrice != null && filter.minPrice > 0) {
+        queryBuilder.whereGreaterThanOrEqualsTo(
+            keyAnuncioPrice, filter.minPrice);
+      }
+      if (filter.maxPrice != null && filter.maxPrice > 0) {
+        queryBuilder.whereLessThanOrEqualTo(keyAnuncioPrice, filter.maxPrice);
+      }
+      /* GARANTIR SE UM DOS DOIS ESTÁ SELECIONADO NO MINIMO, E NO MAXIMO OS 2 ESTAO SELECIONADOS */
+      if (filter.vendorType != null &&
+          filter.vendorType > 0 &&
+          filter.vendorType <
+              VENDOR_TYPE_PROFESSIONAL | VENDOR_TYPE_PARTICULAR) {
+        /* TEMOS QUE FAZER UMA SUBQUERY DENTRO DOS USUARIOS 
+        PARA BUSCAR OS USUARIOS(QUE SAO PROFISSIONAIS OU PARITCULARS)
+        PARA FAZER UM MATCH ENTRE VENDEDOR E O COMPRADOR, 
+        OU SEJA TEMOS QUE FAZER UMA QUERY PARA ACESSAR O PONTEIRO PRA VERIFICAR O TIPO DE USUARIO*/
 
-    final response = await queryBuilder.query();
-    if (response.success && response.results != null) {
-      return response.results
-          .map((anuncioObject) => Anuncio.fromParse(anuncioObject))
-          .toList();
-    } else if (response.success && response.results == null) {
-      /* caso a seja nulo vamos retornar uma lista vazia, 
-      pois ele pode procurar um anuncio que não de match com a lista*/
-      return [];
-    } else {
-      return Future.error(ParseErrors.getDescription(response.error.code));
+        final userQuery = QueryBuilder<ParseUser>(ParseUser.forQuery());
+        if (filter.vendorType == VENDOR_TYPE_PARTICULAR) {
+          /* so mostre vendedor do tipo particular */
+          userQuery.whereEqualTo(keyUserType, UserType.PARTICULAR.index);
+        }
+        if (filter.vendorType == VENDOR_TYPE_PROFESSIONAL) {
+          userQuery.whereEqualTo(keyUserType, UserType.PROFESSIONAL.index);
+        }
+        queryBuilder.whereMatchesQuery(keyAnuncioAnunciante, userQuery);
+      }
+
+      final response = await queryBuilder.query();
+      if (response.success && response.results != null) {
+        return response.results
+            .map((anuncioObject) => Anuncio.fromParse(anuncioObject))
+            .toList();
+      } else if (response.success && response.results == null) {
+        /* caso a seja nulo vamos retornar uma lista vazia, 
+        pois ele pode procurar um anuncio que não de match com a lista*/
+        return [];
+      } else {
+        return Future.error(ParseErrors.getDescription(response.error.code));
+      }
+    } catch (e) {
+      return Future.error("Connection error!");
     }
   }
 
@@ -102,7 +110,7 @@ class AnuncioRepository {
       final anuncioObject = ParseObject(keyAnuncioTable);
 
       //caso esteja(salvando um anuncio existente) editando um anuncio,defina o object id como o id do anuncio editado;
-      if(anuncio.id != null) anuncioObject.objectId = anuncio.id;
+      if (anuncio.id != null) anuncioObject.objectId = anuncio.id;
 
       /* alterando a permissao de edicao do objeto */
       final parseAcl = ParseACL(owner: parseUser);
@@ -186,7 +194,7 @@ class AnuncioRepository {
 
     final response = await queryBuilder.query();
 
-     if (response.success && response.results != null) {
+    if (response.success && response.results != null) {
       return response.results
           .map((anuncioObject) => Anuncio.fromParse(anuncioObject))
           .toList();
@@ -199,28 +207,28 @@ class AnuncioRepository {
     }
   }
 
-  Future<void> sold(Anuncio anuncio)async{
+  Future<void> sold(Anuncio anuncio) async {
     //pegando a referencia do objeto que será marcado como vendido
-    final parseObject = ParseObject(keyAnuncioTable)..set(keyAnuncioid, anuncio.id);
+    final parseObject = ParseObject(keyAnuncioTable)
+      ..set(keyAnuncioid, anuncio.id);
     parseObject.set(keyAnuncioStatus, AnuncioStatus.SOLD.index);
 
     final response = await parseObject.save();
-    if(!response.success){
+    if (!response.success) {
       return Future.error(ParseErrors.getDescription(response.error.code));
     }
-
   }
 
   //VAMOS DELETAR NO CASO SUMIR PRA TODO MUNDO E SÓ NOS ADMIM PODEMOS VER
   Future<void> delete(Anuncio anuncio) async {
     //pegando a referencia do objeto que será marcado como vendido
-    final parseObject = ParseObject(keyAnuncioTable)..set(keyAnuncioid, anuncio.id);
+    final parseObject = ParseObject(keyAnuncioTable)
+      ..set(keyAnuncioid, anuncio.id);
     parseObject.set(keyAnuncioStatus, AnuncioStatus.DELETED.index);
 
     final response = await parseObject.save();
-    if(!response.success){
+    if (!response.success) {
       return Future.error(ParseErrors.getDescription(response.error.code));
     }
-
   }
 }

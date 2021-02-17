@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
+import 'package:olx_mobx/components/custom_drawer/custom_drawer.dart';
 import 'package:olx_mobx/screens/Account/Account.dart';
 import 'package:olx_mobx/screens/Home/HomeScreen.dart';
+import 'package:olx_mobx/screens/Offline/OfflineScreen.dart';
 import 'package:olx_mobx/screens/create/create_screen.dart';
+import 'package:olx_mobx/screens/favorites/Favorites_screen.dart';
+import 'package:olx_mobx/stores/connectivity_store.dart';
 import 'package:olx_mobx/stores/page_store.dart';
 
 class BaseScreen extends StatefulWidget {
@@ -16,6 +20,7 @@ class _BaseScreenState extends State<BaseScreen> {
 
   /* essa instancia pode ser obtida de qualquer lugar do app */
   final PageStore pageStore = GetIt.I<PageStore>();
+  final ConnectivityStore connectivityStore = GetIt.I<ConnectivityStore>();
 
   @override
   void initState() {
@@ -25,6 +30,15 @@ class _BaseScreenState extends State<BaseScreen> {
     reaction((_) => pageStore.page,
         (page) => pageController.jumpToPage(page) /* recebando a pagina atual */
         );
+    //vai ficar monitorando o connectivity store
+    // e quando o connectivity store não estiver conectado vai exibir um dialog/offlineScreen e manter o estado salvo
+    autorun((_) {
+      if (!connectivityStore.connected) {
+        Future.delayed(Duration(milliseconds: 50)).then((value) {
+          showDialog(context: context, builder: (_) => OfflineScreen());
+        });
+      }
+    });
   }
 
   @override
@@ -37,10 +51,11 @@ class _BaseScreenState extends State<BaseScreen> {
           HomeScreen(),
           CreateScreen(),
           Container(color: Colors.yellow),
-          Container(color: Colors.purple),
+          FavoriteScreen(),
           AccountScreen(),
         ],
       ),
+      drawer: CustomDrawer(),
     );
   }
 }

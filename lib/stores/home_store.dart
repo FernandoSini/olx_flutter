@@ -1,7 +1,9 @@
+import 'package:get_it/get_it.dart';
 import 'package:olx_mobx/models/Anuncio.dart';
 import 'package:olx_mobx/models/Category.dart';
 import 'package:mobx/mobx.dart';
 import 'package:olx_mobx/repositories/anuncio_repository.dart';
+import 'package:olx_mobx/stores/connectivity_store.dart';
 
 import 'filter_store.dart';
 part 'home_store.g.dart';
@@ -9,9 +11,12 @@ part 'home_store.g.dart';
 class HomeStore = _HomeStoreBase with _$HomeStore;
 
 abstract class _HomeStoreBase with Store {
+  //fazendo com que a tela home seja carregada quando tiver reconexão
+  final ConnectivityStore connectivityStore = GetIt.I<ConnectivityStore>();
 /* usando o autorun pra monitorar o search category e o filter */
   _HomeStoreBase() {
     autorun((_) async {
+      connectivityStore.connected;
       try {
         setLoading(true);
         final newAnuncios = await AnuncioRepository().getHomeAnuncioList(

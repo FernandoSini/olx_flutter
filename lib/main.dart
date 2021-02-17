@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:olx_mobx/stores/category_store.dart';
+import 'package:olx_mobx/stores/connectivity_store.dart';
 import 'package:olx_mobx/stores/favorite_store.dart';
 import 'package:olx_mobx/stores/home_store.dart';
 import 'package:olx_mobx/stores/page_store.dart';
@@ -28,6 +29,7 @@ Future<void> _inicializarParse() async {
 
 /* função que irá localizar os servicos do app como page store */
 void setupLocators() {
+  GetIt.I.registerSingleton(ConnectivityStore());
   /* Só pode ter um get_it no projeto, singleton é um objeto que só pode existir uma vez no projeto */
   GetIt.I.registerSingleton(PageStore());
   GetIt.I.registerSingleton(HomeStore());

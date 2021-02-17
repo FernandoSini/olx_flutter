@@ -157,7 +157,8 @@ class ActiveTile extends StatelessWidget {
         context: context,
         builder: (_) => AlertDialog(
               title: Text("Anuncio vendido"),
-              content: Text("Você deseja confirmar que o ${anuncio.title} foi vendido?"),
+              content: Text(
+                  "Você deseja confirmar que o ${anuncio.title} foi vendido?"),
               actions: [
                 FlatButton(
                   onPressed: Navigator.of(context).pop,
@@ -174,6 +175,7 @@ class ActiveTile extends StatelessWidget {
               ],
             ));
   }
+
   Future<void> deleteAnuncio(BuildContext context) {
     showDialog(
         context: context,
